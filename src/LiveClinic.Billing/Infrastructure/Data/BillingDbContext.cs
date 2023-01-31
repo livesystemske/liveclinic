@@ -5,7 +5,7 @@ using LiveClinic.Billing.Domain;
 using LiveClinic.Shared.Domain;
 using Microsoft.EntityFrameworkCore;
 
-namespace LiveClinic.Billing.Data
+namespace LiveClinic.Billing.Infrastructure.Data
 {
     public class BillingDbContext:DbContext
     {

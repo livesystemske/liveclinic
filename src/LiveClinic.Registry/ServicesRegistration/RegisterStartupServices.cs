@@ -1,4 +1,6 @@
 ﻿using System;
+using LiveClinic.Registry.Application;
+using LiveClinic.Registry.Infrastructure;
 using LiveClinic.Shared.Common;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
@@ -56,7 +58,8 @@ namespace LiveClinic.Registry.ServicesRegistration
                 options.OperationFilter<AuthorizeCheckOperationFilter>();
             });
             
-            builder.Services.RegisterApp(builder.Configuration);
+            builder.Services.RegisterApplicationServices(builder.Configuration);
+            builder.Services.RegisterAppInfrastructure(builder.Configuration);
             
             return builder;
         }

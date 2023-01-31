@@ -1,4 +1,6 @@
 ﻿using System;
+using LiveClinic.Billing.Application;
+using LiveClinic.Billing.Infrastructure;
 using LiveClinic.Shared.Common;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
@@ -56,10 +58,10 @@ namespace LiveClinic.Billing.ServicesRegistration
                 });
                 options.OperationFilter<AuthorizeCheckOperationFilter>();
             });
-            
-            builder.Services.RegisterApp(builder.Configuration);
-    
-            
+
+            builder.Services.RegisterApplicationServices(builder.Configuration);
+            builder.Services.RegisterAppInfrastructure(builder.Configuration);
+
             return builder;
         }
 

@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using LiveClinic.Billing.Data;
+using LiveClinic.Billing.Infrastructure.Data;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 using Serilog;

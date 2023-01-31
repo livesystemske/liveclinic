@@ -23,5 +23,15 @@ namespace LiveClinic.Shared.Tests.Custom
             Assert.That(memberNo,Is.EqualTo($"KE-UHC-{id}"));
             Console.WriteLine(memberNo);
         }
+        
+        [Test]
+        public void should_GenerateNewId()
+        {
+            long testIdA = LiveUtils.GenerateNewId();
+            long testIdB = LiveUtils.GenerateNewId();
+            Assert.That(testIdA,Is.Not.EqualTo(testIdB));
+            Console.WriteLine(testIdA);
+            Console.WriteLine(testIdB);
+        }
     }
 }

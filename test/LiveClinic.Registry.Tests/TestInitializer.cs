@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using LiveClinic.Registry.Application;
 using LiveClinic.Registry.Data;
 using LiveClinic.Registry.Domain;
+using LiveClinic.Registry.Infrastructure;
 using LiveClinic.Registry.ServicesRegistration;
 using LiveClinic.Shared.Domain;
 using Microsoft.Extensions.Configuration;
@@ -37,7 +39,8 @@ namespace LiveClinic.Registry.Tests
                 .CreateLogger();
 
             var services = new ServiceCollection();
-            services.RegisterApp(config);
+            services.RegisterApplicationServices(config);
+            services.RegisterAppInfrastructure(config);
             ServiceProvider = services.BuildServiceProvider();
         }
 
