@@ -22,7 +22,7 @@ namespace LiveClinic.Registry.ServicesRegistration
             app.UseAuthorization();
 
             app.MapControllers();
-
+            app.UseSerilogRequestLogging();
             SeedData(app);
 
             return app;
@@ -30,16 +30,19 @@ namespace LiveClinic.Registry.ServicesRegistration
 
         private static void SeedData(WebApplication app)
         {
-            var context = app.Services.GetService<RegistryDbContext>();
-            try
+            using (var scope = app.Services.CreateScope())
             {
-                context.Database.EnsureCreated();
-                context.Seed();
-                Log.Debug($"initializing Database [OK]");
-            }
-            catch (Exception e)
-            {
-                Log.Error(e,$"initializing Database Error");
+                var context = scope.ServiceProvider.GetService<RegistryDbContext>();
+                try
+                {
+                    context.Database.EnsureCreated();
+                    context.Seed();
+                    Log.Debug($"initializing Database [OK]");
+                }
+                catch (Exception e)
+                {
+                    Log.Error(e,$"initializing Database Error");
+                }
             }
         }
     }

@@ -44,12 +44,19 @@ namespace LiveClinic.Billing.Application.Commands
                 
                 if (null == servicePrice)
                     throw new ArgumentException("Service price not found!");
+                
+                var bill = _context
+                    .Bills.AsNoTracking()
+                    .FirstOrDefault(x => x.Id == request.NewBillItem.BillId);
+                
+                if (null == bill)
+                    throw new ArgumentException("Bill not found!");
 
-                var bill = BillItem.From(request.NewBillItem, servicePrice.Price);
-                await _context.AddAsync(bill,cancellationToken);
+                var billItem = BillItem.From(request.NewBillItem, servicePrice.Price);
+                await _context.AddAsync(billItem,cancellationToken);
                 await _context.SaveChangesAsync(cancellationToken);
 
-                await _mediator.Publish(new BillItemCreatedEvent(bill.Id), cancellationToken);
+                await _mediator.Publish(new BillItemCreatedEvent(billItem.Id), cancellationToken);
                 return Result.Success();
             }
             catch (Exception e)

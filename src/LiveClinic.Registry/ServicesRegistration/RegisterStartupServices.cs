@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Serilog;
 
 namespace LiveClinic.Registry.ServicesRegistration
 {
@@ -12,13 +13,24 @@ namespace LiveClinic.Registry.ServicesRegistration
     {
         public static WebApplicationBuilder RegisterServices(this WebApplicationBuilder builder)
         {
-            var environment = builder.Environment;
+            var environment = builder.Environment.EnvironmentName;
             
             builder.Configuration.
                 AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{environment}.json", optional: true, reloadOnChange: true)
                 .AddJsonFile("serilog.json", optional: true, reloadOnChange: true)
                 .AddJsonFile($"serilog.{environment}.json", optional: true, reloadOnChange: true);
+            
+            Log.Logger = new LoggerConfiguration()
+                .ReadFrom.Configuration(builder.Configuration)
+                .CreateLogger();
+            
+            builder.Host.UseSerilog((hostContext, loggerConfig) =>
+            {
+                loggerConfig
+                    .ReadFrom.Configuration(hostContext.Configuration)
+                    .Enrich.WithProperty("ApplicationName", hostContext.HostingEnvironment.ApplicationName);
+            });
             
             var liveAuthSetting = builder.Configuration.GetSection(LiveAuthSetting.Key).Get<LiveAuthSetting>();
             builder.Services.AddSingleton(liveAuthSetting);

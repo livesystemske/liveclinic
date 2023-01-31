@@ -15,7 +15,7 @@
                 "Name": "File",
                 "Args": {
                     "restrictedToMinimumLevel": "Error",
-                    "path": "Log/liveauth_admin_.log",
+                    "path": "Log/liveclinic_registry_.log",
                     "rollingInterval": "Day"
                 }
             }

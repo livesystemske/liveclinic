@@ -475,3 +475,8 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 
+# DBs
+*.sqlite
+
+# Log
+/Log

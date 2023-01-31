@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using LiveClinic.Registry.Domain;
-using LiveClinic.Shared.Domain;
+﻿using LiveClinic.Registry.Domain;
 using Microsoft.EntityFrameworkCore;
 
 namespace LiveClinic.Registry.Data
