@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using LiveClinic.Billing.Application.Queries;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,6 +21,7 @@ namespace LiveClinic.Billing.Tests.Application.Queries
         {
             var res =await _mediator.Send(new GetPatientBillQuery(1));
             Assert.That(res.IsSuccess,Is.True);
+            Assert.That(res.Value.Any(),Is.True);
         }
     }
 }

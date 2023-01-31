@@ -22,7 +22,7 @@ namespace LiveClinic.Billing.Tests.Application.Commands
         {
             var dto = new NewPaymentDto()
             {
-                BillId = 1,Amount = 10,Currency = Currency.USD
+                BillId = 1,Amount = 20,Currency = Currency.USD
             };
             var res =await _mediator.Send(new AddPaymentCommand(dto));
             Assert.That(res.IsSuccess,Is.True);

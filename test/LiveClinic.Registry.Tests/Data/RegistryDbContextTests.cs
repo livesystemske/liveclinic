@@ -20,6 +20,7 @@ namespace LiveClinic.Registry.Tests.Data
         public void should_Seed()
         {
             Assert.That(_context.Patients.Any(),Is.True);
+            Assert.That(_context.Encounters.Any(),Is.True);
             _context.Patients.ToList().ForEach(p=>Log.Information($"{p}"));
         }
     }

@@ -24,10 +24,10 @@ namespace LiveClinic.Billing.Domain
         {
         }
 
-        public Bill(long patientId, string patientName)
+        public Bill(long patientId, string patientName,long? id=null)
         {
             Created = DateTime.Now;
-            Id = Created.Ticks;
+            Id = id ?? LiveUtils.GenerateNewId();
             
             Invoice = Id.GenerateInvoice();
             PatientId = patientId;

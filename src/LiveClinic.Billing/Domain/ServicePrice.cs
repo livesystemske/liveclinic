@@ -1,5 +1,6 @@
 ﻿using System;
 using CSharpFunctionalExtensions;
+using LiveClinic.Shared.Common;
 using LiveClinic.Shared.Domain;
 
 namespace LiveClinic.Billing.Domain
@@ -14,9 +15,9 @@ namespace LiveClinic.Billing.Domain
         {
         }
     
-        public ServicePrice(Service service, Money price,DateTime effectiveDate)
+        public ServicePrice(Service service, Money price,DateTime effectiveDate,long? id=null)
         {
-            Id = DateTime.Now.Ticks;
+            Id = id ?? LiveUtils.GenerateNewId();
             Service = service;
             Price = price;
             EffectiveDate = effectiveDate;

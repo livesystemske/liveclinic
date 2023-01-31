@@ -1,6 +1,7 @@
 ﻿using System;
 using CSharpFunctionalExtensions;
 using LiveClinic.Billing.Application.Dtos;
+using LiveClinic.Shared.Common;
 using LiveClinic.Shared.Domain;
 
 namespace LiveClinic.Billing.Domain
@@ -15,10 +16,10 @@ namespace LiveClinic.Billing.Domain
         {
         }
 
-        public Payment(long billId, Money amount)
+        public Payment(long billId, Money amount,long? id=null)
         {
             Created=DateTime.Now;
-            Id = Created.Ticks;
+            Id = id ?? LiveUtils.GenerateNewId();
             BillId = billId;
             Amount = amount;
         }

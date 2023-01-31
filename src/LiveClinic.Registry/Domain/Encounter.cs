@@ -1,6 +1,7 @@
 ﻿using System;
 using CSharpFunctionalExtensions;
 using LiveClinic.Registry.Application.Dtos;
+using LiveClinic.Shared.Common;
 using LiveClinic.Shared.Domain;
 
 namespace LiveClinic.Registry.Domain
@@ -15,10 +16,10 @@ namespace LiveClinic.Registry.Domain
         {
         }
 
-        public Encounter(long patientId, Service service)
+        public Encounter(long patientId, Service service, long? id = null)
         {
-            Created=DateTime.Now;
-            Id = Created.Ticks;
+            Created = DateTime.Now;
+            Id = id ?? LiveUtils.GenerateNewId();
             PatientId = patientId;
             Service = service;
         }

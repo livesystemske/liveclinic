@@ -23,7 +23,7 @@ namespace LiveClinic.Billing.Tests.Application.Commands
         {
             var dto = new NewBillItemDto()
             {
-                BillId = 1, EncounterId = 1,Service = Service.Lab
+                BillId = 1, EncounterId = 5,Service = Service.Lab
             };
             var res =await _mediator.Send(new AddBillItemCommand(dto));
             Assert.That(res.IsSuccess,Is.True);
