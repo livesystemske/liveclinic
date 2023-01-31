@@ -5,12 +5,17 @@ namespace LiveClinic.Registry.Domain.Events
 {
     public class PatientRegisteredEvent:INotification
     {
-        public long Id { get;}
+        public long PatientId { get;}
+        public string PatientName { get;}
+        public long EncounterId { get;}
+        
         public DateTime Occured { get; }=DateTime.Now;
 
-        public PatientRegisteredEvent(long encounterId)
+        public PatientRegisteredEvent(long patientId, string patientName, long encounterId)
         {
-            Id = encounterId;
+            PatientId = patientId;
+            PatientName = patientName;
+            EncounterId = encounterId;
         }
     }
 }

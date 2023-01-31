@@ -36,6 +36,8 @@ namespace LiveClinic.Registry.ServicesRegistration
             
             var liveAuthSetting = builder.Configuration.GetSection(LiveAuthSetting.Key).Get<LiveAuthSetting>();
             builder.Services.AddSingleton(liveAuthSetting);
+            var transportSetting = builder.Configuration.GetSection(TransportSetting.Key).Get<TransportSetting>();
+            builder.Services.AddSingleton(transportSetting);
             builder.Services.Configure<LiveAuthSetting>(builder.Configuration.GetSection(LiveAuthSetting.Key));
             builder.Services.AddAuthentication("Bearer")
                 .AddJwtBearer("Bearer", options =>

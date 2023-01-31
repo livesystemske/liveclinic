@@ -1,15 +1,16 @@
 ﻿using System;
 using MediatR;
 
-namespace LiveClinic.Billing.Domain.Events;
-
-public class PaymentAddedEvent:INotification
+namespace LiveClinic.Billing.Domain.Events
 {
-    public long Id { get;}
-    public DateTime Occured { get; }=DateTime.Now;
-
-    public PaymentAddedEvent(long encounterId)
+    public class PaymentAddedEvent:INotification
     {
-        Id = encounterId;
+        public long Id { get;}
+        public DateTime Occured { get; }=DateTime.Now;
+
+        public PaymentAddedEvent(long encounterId)
+        {
+            Id = encounterId;
+        }
     }
 }

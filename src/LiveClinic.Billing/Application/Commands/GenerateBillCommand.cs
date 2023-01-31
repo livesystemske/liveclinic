@@ -11,7 +11,7 @@ using Serilog;
 
 namespace LiveClinic.Billing.Application.Commands
 {
-    public class GenerateBillCommand : IRequest<Result>
+    public class GenerateBillCommand : IRequest<Result<long>>
     {
         public NewBillDto NewBill { get; }
 
@@ -21,7 +21,7 @@ namespace LiveClinic.Billing.Application.Commands
         }
     }
 
-    public class GenerateBillCommandHandler : IRequestHandler<GenerateBillCommand, Result>
+    public class GenerateBillCommandHandler : IRequestHandler<GenerateBillCommand, Result<long>>
     {
         private readonly IMediator _mediator;
         private readonly BillingDbContext _context;
@@ -32,21 +32,19 @@ namespace LiveClinic.Billing.Application.Commands
             _context = context;
         }
 
-        public async Task<Result> Handle(GenerateBillCommand request, CancellationToken cancellationToken)
+        public async Task<Result<long>> Handle(GenerateBillCommand request, CancellationToken cancellationToken)
         {
             try
             {
                 var bill = Bill.From(request.NewBill);
-                await _context.AddAsync(bill,cancellationToken);
+                await _context.AddAsync(bill, cancellationToken);
                 await _context.SaveChangesAsync(cancellationToken);
-
-                await _mediator.Publish(new BillCreatedEvent(bill.Id), cancellationToken);
-                return Result.Success();
+                return Result.Success(bill.Id);
             }
             catch (Exception e)
             {
                 Log.Error(e, "{Name} error!", request.GetType().Name);
-                return Result.Failure(e.Message);
+                return Result.Failure<long>(e.Message);
             }
         }
     }

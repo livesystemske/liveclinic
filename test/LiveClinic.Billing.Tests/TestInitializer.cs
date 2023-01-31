@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using LiveClinic.Billing.Application;
 using LiveClinic.Billing.Domain;
 using LiveClinic.Billing.Infrastructure;
 using LiveClinic.Billing.Infrastructure.Data;
 using LiveClinic.Billing.ServicesRegistration;
+using LiveClinic.Contracts;
 using LiveClinic.Shared.Domain;
+using MassTransit;
+using MassTransit.Testing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
@@ -42,7 +46,7 @@ namespace LiveClinic.Billing.Tests
             
             services.RegisterApplicationServices(config);
             services.RegisterAppInfrastructure(config);
-            
+            services.AddMassTransitTestHarness(cfg =>{cfg.AddConsumer<TestConsumer>();});
             ServiceProvider = services.BuildServiceProvider();
         }
 
@@ -52,6 +56,8 @@ namespace LiveClinic.Billing.Tests
             dbs.Database.EnsureCreated();
             dbs.Seed();
             SeedTestData(dbs);
+            var harness = ServiceProvider.GetRequiredService<ITestHarness>();
+            harness.Start().Wait();
         }
         
         private void SeedTestData(BillingDbContext context)
@@ -85,6 +91,19 @@ namespace LiveClinic.Billing.Tests
                     new(2,Money.From(5,Currency.USD),2)
                 });
                 context.SaveChanges();
+            }
+        }
+        
+        public class TestConsumer:IConsumer<PatientRegistration>,IConsumer<EncounterCreation>
+        {
+            public async Task Consume(ConsumeContext<PatientRegistration> context)
+            {
+                Log.Information($"Recieved | {context.Message.PatientId} {context.Message.PatientName}");
+            }
+
+            public async Task Consume(ConsumeContext<EncounterCreation> context)
+            {
+                Log.Information($"Recieved | {context.Message.PatientId} {context.Message.PatientName}");
             }
         }
     }

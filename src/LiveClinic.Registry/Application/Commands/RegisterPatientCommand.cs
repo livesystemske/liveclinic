@@ -39,8 +39,8 @@ namespace LiveClinic.Registry.Application.Commands
                 var patient = Patient.From(request.NewPatient);
                 await _context.AddAsync(patient, cancellationToken);
                 await _context.SaveChangesAsync(cancellationToken);
-
-                await _mediator.Publish(new PatientRegisteredEvent(patient.Id), cancellationToken);
+                
+                await _mediator.Publish(new PatientRegisteredEvent(patient.Id,$"{patient.PatientName}",patient.RegistrationEncounter), cancellationToken);
                 
                 return Result.Success();
             }

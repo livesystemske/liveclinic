@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using CSharpFunctionalExtensions;
 using LiveClinic.Registry.Application.Dtos;
 using LiveClinic.Shared.Common;
@@ -10,14 +11,15 @@ namespace LiveClinic.Registry.Domain
     public class Patient:Entity<long>
     {
         private readonly List<Encounter> _encounters=new List<Encounter>();
+        
         public string MemberNo { get; private set; }
         public PersonName PatientName { get; private set; } = new PersonName();
         public Gender Gender { get; private set; }
         public DateTime BirthDate { get;  private set;}
         public DateTime Created { get;  private set;}
-
         public IReadOnlyCollection<Encounter> Encounters => _encounters;
-        
+        public long RegistrationEncounter => _encounters.First(x => x.Service == Service.Registration).Id;
+
         private Patient()
         {
         }
@@ -30,6 +32,13 @@ namespace LiveClinic.Registry.Domain
             Gender = gender;
             BirthDate = birthDate;
             Created = DateTime.Now;
+            Enroll();
+        }
+
+        private void Enroll()
+        {
+            var encounter = new Encounter(Id, Service.Registration);
+            _encounters.Add(encounter);
         }
         
         public static Patient From(NewPatientDto dto)

@@ -49,7 +49,9 @@ namespace LiveClinic.Registry.Application.Commands
                 await _context.AddAsync(encounter,cancellationToken);
                 await _context.SaveChangesAsync(cancellationToken);
 
-                await _mediator.Publish(new EncounterCreatedEvent(encounter.Id), cancellationToken);
+                await _mediator.Publish(new EncounterCreatedEvent(
+                        encounter.Id, $"{patient.PatientName}", encounter.Id, encounter.Service),
+                    cancellationToken);
                 
                 return Result.Success();
             }

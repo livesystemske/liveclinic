@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace LiveClinic.Shared
 {
-    public static class RegisterDatabaseService
+    public static class RegisterInfrastructureService
     {
         public static IServiceCollection AddSqliteDatabase<T>(this IServiceCollection services,
             IConfiguration configuration) where T : DbContext
