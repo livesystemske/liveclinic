@@ -6,6 +6,9 @@
         <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
         <Nullable>disable</Nullable>
         <ImplicitUsings>disable</ImplicitUsings>
+        <IsPackable>false</IsPackable>
+        <SpaRoot>ClientApp\</SpaRoot>
+        <DefaultItemExcludes>$(DefaultItemExcludes);$(SpaRoot)node_modules\**</DefaultItemExcludes>
     </PropertyGroup>
 
     <ItemGroup>
@@ -13,5 +16,67 @@
         <PackageReference Include="Serilog.AspNetCore" Version="6.0.0" />
 
         <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="6.0.0" />
+
+        <PackageReference Include="Serilog.Sinks.Console" Version="4.1.0" />
+
+        <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
     </ItemGroup>
+
+
+    <ItemGroup>
+        <!-- Don't publish the SPA source files, but do show them in the project files list -->
+        <Content Remove="$(SpaRoot)**" />
+        <None Remove="$(SpaRoot)**" />
+        <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
+    </ItemGroup>
+
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="wwwroot\asset-manifest.json" />
+      <_ContentIncludedByDefault Remove="wwwroot\favicon.ico" />
+      <_ContentIncludedByDefault Remove="wwwroot\index.html" />
+      <_ContentIncludedByDefault Remove="wwwroot\logo192.png" />
+      <_ContentIncludedByDefault Remove="wwwroot\logo512.png" />
+      <_ContentIncludedByDefault Remove="wwwroot\manifest.json" />
+      <_ContentIncludedByDefault Remove="wwwroot\robots.txt" />
+      <_ContentIncludedByDefault Remove="wwwroot\static\css\main.073c9b0a.css" />
+      <_ContentIncludedByDefault Remove="wwwroot\static\css\main.073c9b0a.css.map" />
+      <_ContentIncludedByDefault Remove="wwwroot\static\js\787.bcdd947d.chunk.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\static\js\787.bcdd947d.chunk.js.map" />
+      <_ContentIncludedByDefault Remove="wwwroot\static\js\main.50d3e2a1.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\static\js\main.50d3e2a1.js.LICENSE.txt" />
+      <_ContentIncludedByDefault Remove="wwwroot\static\js\main.50d3e2a1.js.map" />
+      <_ContentIncludedByDefault Remove="wwwroot\static\media\logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg" />
+    </ItemGroup>
+
+
+    <ItemGroup>
+      <Folder Include="wwwroot" />
+    </ItemGroup>
+
+    <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
+        <!-- Ensure Node.js is installed -->
+        <Exec Command="node --version" ContinueOnError="true">
+            <Output TaskParameter="ExitCode" PropertyName="ErrorCode" />
+        </Exec>
+        <Error Condition="'$(ErrorCode)' != '0'" Text="Node.js is required to build and run this project. To continue, please install Node.js from https://nodejs.org/, and then restart your command prompt or IDE." />
+        <Message Importance="high" Text="Restoring dependencies using 'npm'. This may take several minutes..." />
+        <Exec WorkingDirectory="$(SpaRoot)" Command="npm install" />
+    </Target>
+
+    <Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">
+        <!-- As part of publishing, ensure the JS resources are freshly built in production mode -->
+        <Exec WorkingDirectory="$(SpaRoot)" Command="npm install" />
+        <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build" />
+
+        <!-- Include the newly-built files in the publish output -->
+        <ItemGroup>
+            <DistFiles Include="$(SpaRoot)build\**" />
+            <ResolvedFileToPublish Include="@(DistFiles->'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
+                <RelativePath>wwwroot\%(RecursiveDir)%(FileName)%(Extension)</RelativePath>
+                <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+                <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+            </ResolvedFileToPublish>
+        </ItemGroup>
+    </Target>
 </Project>

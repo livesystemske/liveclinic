@@ -7,28 +7,29 @@ using MassTransit;
 using MediatR;
 using Serilog;
 
-namespace LiveClinic.Billing.Application.EventHandlers;
-
-public class BillingServicesConsumer:IConsumer<EncounterCreation>
+namespace LiveClinic.Billing.Application.EventHandlers
 {
-    private readonly IMediator _mediator;
-
-    public BillingServicesConsumer(IMediator mediator)
+    public class BillingServicesConsumer:IConsumer<EncounterCreation>
     {
-        _mediator = mediator;
-    }
+        private readonly IMediator _mediator;
 
-    public async Task Consume(ConsumeContext<EncounterCreation> context)
-    {
-        Log.Information($"Recieved | {context.Message.PatientId} {context.Message.PatientName}");
-
-        var billId = 0;
-
-        var newb = new NewBillItemDto()
+        public BillingServicesConsumer(IMediator mediator)
         {
-            BillId =billId, EncounterId = context.Message.EncounterId, Service = (Service)context.Message.Service
-        };
-        var ress = await _mediator.Send(new AddBillItemCommand(newb));
+            _mediator = mediator;
+        }
 
+        public async Task Consume(ConsumeContext<EncounterCreation> context)
+        {
+            Log.Information($"Recieved | {context.Message.PatientId} {context.Message.PatientName}");
+
+            var billId = 0;
+
+            var newb = new NewBillItemDto()
+            {
+                BillId =billId, EncounterId = context.Message.EncounterId, Service = (Service)context.Message.Service
+            };
+            var ress = await _mediator.Send(new AddBillItemCommand(newb));
+
+        }
     }
 }

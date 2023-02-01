@@ -23,7 +23,7 @@ try
     var app = builder
         .ConfigureServices()
         .ConfigurePipeline();
-
+    app.UseSerilogRequestLogging();
     app.Run();
 }
 catch (Exception ex)

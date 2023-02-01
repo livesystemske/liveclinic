@@ -7,33 +7,34 @@ using MassTransit;
 using MediatR;
 using Serilog;
 
-namespace LiveClinic.Billing.Application.EventHandlers;
-
-public class BillingRegistrationConsumer:IConsumer<PatientRegistration>
+namespace LiveClinic.Billing.Application.EventHandlers
 {
-    private readonly IMediator _mediator;
-
-    public BillingRegistrationConsumer(IMediator mediator)
+    public class BillingRegistrationConsumer:IConsumer<PatientRegistration>
     {
-        _mediator = mediator;
-    }
+        private readonly IMediator _mediator;
 
-    public async Task Consume(ConsumeContext<PatientRegistration> context)
-    {
-        Log.Information($"Recieved | {context.Message.PatientId} {context.Message.PatientName}");
-        var newBill = new NewBillDto()
-            { PatientId = context.Message.PatientId, PatientName = context.Message.PatientName };
-        
-        var res = await _mediator.Send(new GenerateBillCommand(newBill));
-        
-        if (res.IsSuccess)
+        public BillingRegistrationConsumer(IMediator mediator)
         {
-            var newb = new NewBillItemDto()
-            {
-                BillId = res.Value, EncounterId = context.Message.EncounterId, Service = Service.Registration
-            };
-            var ress = await _mediator.Send(new AddBillItemCommand(newb));
+            _mediator = mediator;
         }
+
+        public async Task Consume(ConsumeContext<PatientRegistration> context)
+        {
+            Log.Information($"Recieved | {context.Message.PatientId} {context.Message.PatientName}");
+            var newBill = new NewBillDto()
+                { PatientId = context.Message.PatientId, PatientName = context.Message.PatientName };
+        
+            var res = await _mediator.Send(new GenerateBillCommand(newBill));
+        
+            if (res.IsSuccess)
+            {
+                var newb = new NewBillItemDto()
+                {
+                    BillId = res.Value, EncounterId = context.Message.EncounterId, Service = Service.Registration
+                };
+                var ress = await _mediator.Send(new AddBillItemCommand(newb));
+            }
             
+        }
     }
 }
