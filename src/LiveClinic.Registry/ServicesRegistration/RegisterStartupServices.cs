@@ -3,6 +3,8 @@ using LiveClinic.Registry.Application;
 using LiveClinic.Registry.Infrastructure;
 using LiveClinic.Shared.Common;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -48,6 +50,24 @@ namespace LiveClinic.Registry.ServicesRegistration
                         ValidateAudience = false
                     };
                 });
+            
+            builder.Services.AddApiVersioning(apiVerConfig =>
+            {
+                apiVerConfig.AssumeDefaultVersionWhenUnspecified = true;
+                apiVerConfig.DefaultApiVersion = new ApiVersion(1, 0);
+                apiVerConfig.ReportApiVersions = true;
+                apiVerConfig.ApiVersionReader = ApiVersionReader.Combine(
+                    new UrlSegmentApiVersionReader(),
+                    new HeaderApiVersionReader("x-api-version"),
+                    new MediaTypeApiVersionReader("x-api-version")
+                );
+            });
+            // Add ApiExplorer to discover versions
+            builder.Services.AddVersionedApiExplorer(setup =>
+            {
+                setup.GroupNameFormat = "'v'VVV";
+                setup.SubstituteApiVersionInUrl = true;
+            });
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(options =>

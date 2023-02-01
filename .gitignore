@@ -479,4 +479,7 @@ FodyWeavers.xsd
 *.sqlite
 
 # Log
-/Log
+Log/
+
+# Pubfiles
+wwwroot/

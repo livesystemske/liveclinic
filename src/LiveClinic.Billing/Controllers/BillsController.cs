@@ -9,8 +9,10 @@ using Serilog;
 
 namespace LiveClinic.Billing.Controllers
 {
+    
+    [ApiVersion("1.0")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
-    [Route("[controller]")]
     public class BillsController : ControllerBase
     {
          private readonly IMediator _mediator;

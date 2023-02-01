@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Linq;
 using LiveClinic.Billing.Infrastructure.Data;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
@@ -13,8 +15,17 @@ namespace LiveClinic.Billing.ServicesRegistration
         {
             if (app.Environment.IsDevelopment())
             {
+                var apiVersionDescriptionProvider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
+                
                 app.UseSwagger();
-                app.UseSwaggerUI();
+                app.UseSwaggerUI(options =>
+                {
+                    foreach (var description in apiVersionDescriptionProvider.ApiVersionDescriptions.Reverse())
+                    {
+                        options.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json",
+                            description.GroupName.ToUpperInvariant());
+                    }
+                });
             }
 
             app.UseHttpsRedirection();

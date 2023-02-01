@@ -9,8 +9,9 @@ using Serilog;
 
 namespace LiveClinic.Registry.Controllers
 {
+    [ApiVersion("1.0")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
-    [Route("[controller]")]
     public class PatientsController : ControllerBase
     {
         private readonly IMediator _mediator;
