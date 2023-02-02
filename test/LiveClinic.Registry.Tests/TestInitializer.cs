@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using LiveClinic.Contracts;
@@ -85,14 +86,16 @@ namespace LiveClinic.Registry.Tests
         
         public class TestConsumer:IConsumer<PatientRegistration>,IConsumer<EncounterCreation>
         {
-            public async Task Consume(ConsumeContext<PatientRegistration> context)
+            public Task Consume(ConsumeContext<PatientRegistration> context)
             {
                 Log.Information($"Recieved | {context.Message.PatientId} {context.Message.PatientName}");
+                return Task.CompletedTask;
             }
 
-            public async Task Consume(ConsumeContext<EncounterCreation> context)
+            public Task Consume(ConsumeContext<EncounterCreation> context)
             {
                 Log.Information($"Recieved | {context.Message.PatientId} {context.Message.PatientName}");
+                return Task.CompletedTask;
             }
         }
     }
