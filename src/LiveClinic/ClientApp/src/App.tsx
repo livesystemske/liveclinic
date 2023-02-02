@@ -1,13 +1,11 @@
 ﻿import React from 'react';
 import './App.css';
-import {QueryClient, QueryClientProvider} from "react-query";
+import Patients from "./registry/components/patients/Patients";
 
-const  queryClient=new QueryClient()
+
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      
-    </QueryClientProvider>
+    <Patients/>
   );
 }
 

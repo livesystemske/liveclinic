@@ -1,5 +1,5 @@
-﻿<component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="LiveClinic" type="CompoundRunConfigurationType">
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Backend" type="CompoundRunConfigurationType">
     <toRun name="LiveClinic" type="LaunchSettings" />
     <toRun name="LiveClinic.Billing" type="LaunchSettings" />
     <toRun name="LiveClinic.Registry" type="LaunchSettings" />
