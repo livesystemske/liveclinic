@@ -1,12 +1,12 @@
-﻿import React from 'react';
+﻿import React, {FC} from 'react';
 import './App.css';
-import Patients from "./registry/components/patients/Patients";
+import {QueryClient, QueryClientProvider} from "react-query";
+import Patients from "./features/registry/components/patients/Patients";
 
-
-function App() {
-  return (
-    <Patients/>
-  );
+const App:FC=()=> {
+    return (
+        <Patients/>
+    );
 }
 
 export default App;

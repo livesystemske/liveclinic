@@ -15,6 +15,7 @@ namespace LiveClinic.Registry.ServicesRegistration
 {
     public static class RegisterStartupServices
     {
+        public static readonly string _policyName = "CorsPolicy";
         public static WebApplicationBuilder RegisterServices(this WebApplicationBuilder builder)
         {
             var environment = builder.Environment.EnvironmentName;
@@ -67,6 +68,15 @@ namespace LiveClinic.Registry.ServicesRegistration
             {
                 setup.GroupNameFormat = "'v'VVV";
                 setup.SubstituteApiVersionInUrl = true;
+            });
+            builder.Services.AddCors(opt =>
+            {
+                opt.AddPolicy(name: _policyName, builder =>
+                {
+                    builder.AllowAnyOrigin()
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                });
             });
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();

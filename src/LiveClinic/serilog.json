@@ -1,10 +1,13 @@
 ﻿{
     "Serilog": {
         "MinimumLevel": {
-            "Default": "Debug",
+            "Default": "Information",
             "Override": {
                 "Microsoft": "Information",
-                "Duende": "Information"
+                "Duende": "Information",
+                "Microsoft": "Warning",
+                "Microsoft.AspNetCore.SpaProxy": "Information",
+                "Microsoft.Hosting.Lifetime": "Information"
             }
         },
         "WriteTo": [

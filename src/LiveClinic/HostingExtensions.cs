@@ -76,7 +76,7 @@ namespace LiveClinic
 
             // local API endpoints
             app.MapControllers()
-                .RequireAuthorization()
+                //.RequireAuthorization()
                 .AsBffApiEndpoint();
 
             app.MapBffManagementEndpoints();

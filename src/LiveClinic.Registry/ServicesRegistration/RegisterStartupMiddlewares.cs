@@ -28,6 +28,7 @@ namespace LiveClinic.Registry.ServicesRegistration
                 });
             }
 
+            app.UseCors(RegisterStartupServices._policyName);
             app.UseHttpsRedirection();
             app.UseAuthentication();
             app.UseAuthorization();

@@ -2,6 +2,6 @@
 
 export interface Money {
     currency?: Currency
-    Value?: number
+    value?: number
 }
 

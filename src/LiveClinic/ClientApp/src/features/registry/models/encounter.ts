@@ -1,4 +1,4 @@
-import {Service} from "../../shared/models/service";
+import {Service} from "../../../shared/models";
 
 export interface Encounter {
     patientId?: number;

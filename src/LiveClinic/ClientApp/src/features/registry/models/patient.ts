@@ -1,6 +1,5 @@
+import {Gender, PersonName} from "../../../shared/models";
 import {Encounter} from "./encounter";
-import {Gender} from "../../shared/models/gender";
-import {PersonName} from "../../shared/models/person-name";
 
 export interface Patient {
     memberNo?: string;

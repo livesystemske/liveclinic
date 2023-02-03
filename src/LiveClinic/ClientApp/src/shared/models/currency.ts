@@ -1,3 +1,3 @@
-﻿    export enum Currency {
-        USD
-    }
+﻿export enum Currency {
+    USD
+}

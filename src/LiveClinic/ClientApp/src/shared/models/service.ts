@@ -1,7 +1,7 @@
-﻿    export enum Service {
-        Registration,
-        Consultation,
-        Pharmacy,
-        Lab
-    }
+﻿export enum Service {
+    Registration,
+    Consultation,
+    Pharmacy,
+    Lab
+}
 

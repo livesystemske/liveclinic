@@ -8,7 +8,7 @@ interface Props {
 const PatientListItem:FC<Props>=({patient})=> {
     return (
         <div>
-           <li>{`${patient?.memberNo} | ${patient?.patientName?.FirstName} | ${patient?.patientName?.LastName} | ${patient?.gender}`}</li>
+           <li>{`${patient?.memberNo} | ${patient?.patientName?.firstName} | ${patient?.patientName?.lastName} | ${patient?.gender}`}</li>
         </div>
     );
 }
