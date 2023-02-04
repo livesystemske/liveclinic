@@ -21,7 +21,7 @@ namespace LiveClinic.Registry.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet("id")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetPatient(long id)
         {
             try

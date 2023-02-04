@@ -16,7 +16,7 @@ class PatientService {
         return result.data || [];
     }
 
-    async getById(id: number) {
+    async getById(id?: string) {
         const result = await this.http.get<Patient>(`${this.url}/${id}`);
         return result.data || [];
     }
