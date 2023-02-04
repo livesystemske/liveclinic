@@ -13,6 +13,7 @@ namespace LiveClinic.Billing.ServicesRegistration
     {
         public static WebApplication SetupMiddleware(this WebApplication app)
         {
+            app.UseForwardedHeaders();
             if (app.Environment.IsDevelopment())
             {
                 var apiVersionDescriptionProvider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
@@ -28,7 +29,7 @@ namespace LiveClinic.Billing.ServicesRegistration
                 });
             }
 
-            app.UseCors(RegisterStartupServices._policyName);
+            //app.UseCors(RegisterStartupServices._policyName);
             app.UseHttpsRedirection();
             app.UseAuthentication();
             app.UseAuthorization();

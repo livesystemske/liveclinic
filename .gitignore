@@ -483,3 +483,4 @@ Log/
 
 # Pubfiles
 wwwroot/
+!wwwroot/.txt

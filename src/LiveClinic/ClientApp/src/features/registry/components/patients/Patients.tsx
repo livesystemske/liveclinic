@@ -2,7 +2,7 @@ import React, {FC} from 'react';
 import {Patient} from "../../models/patient";
 import PatientList from "./PatientList";
 import {useQuery} from "react-query";
-import {patientService} from "../../services";
+import {patientService} from "../../services/patient-service";
 
 
 const Patients: FC = () => {

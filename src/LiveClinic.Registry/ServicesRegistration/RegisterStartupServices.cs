@@ -2,7 +2,9 @@
 using LiveClinic.Registry.Application;
 using LiveClinic.Registry.Infrastructure;
 using LiveClinic.Shared.Common;
+using LiveClinic.Shared.Common.Settings;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Configuration;
@@ -68,6 +70,11 @@ namespace LiveClinic.Registry.ServicesRegistration
             {
                 setup.GroupNameFormat = "'v'VVV";
                 setup.SubstituteApiVersionInUrl = true;
+            });
+            builder.Services.Configure<ForwardedHeadersOptions>(options =>
+            {
+                options.ForwardedHeaders =
+                    ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
             });
             builder.Services.AddCors(opt =>
             {

@@ -1,19 +1,14 @@
-import axios, {AxiosInstance} from "axios";
+import {AxiosInstance} from "axios";
 import {Patient} from "../models";
-
-const baseUrl='/api/'
+import {configService} from "../../../shared/configs/config-service";
 
 class PatientService {
-    url='registry/patients';
+    private url:string;
     private http: AxiosInstance;
-    constructor() {
-        this.http = axios.create({
-            baseURL: baseUrl,
-            headers: {
-                "Content-type": "application/json",
-            },
 
-        });
+    constructor() {
+        this.url='/registry/patients';
+        this.http = configService.getHttpClient();
     }
 
     async getAll() {

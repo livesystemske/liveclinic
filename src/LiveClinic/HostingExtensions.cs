@@ -1,6 +1,10 @@
+using System;
+using System.Collections.Generic;
 using Duende.Bff.Yarp;
+using LiveClinic.Shared.Common.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
@@ -11,6 +15,8 @@ namespace LiveClinic
     {
         public static WebApplication ConfigureServices(this WebApplicationBuilder builder)
         {
+            var apiServices = builder.Configuration.GetSection(ApiServiceSetting.Key).Get<List<ApiServiceSetting>>();
+            builder.Services.AddSingleton(apiServices);
             builder.Services.AddRazorPages();
 
             builder.Services.AddControllers();
@@ -74,22 +80,36 @@ namespace LiveClinic
             // app.UseBff();
             app.UseAuthorization();
 
+            SetupApiServices(app);
+            
             // local API endpoints
             app.MapControllers()
                 //.RequireAuthorization()
                 .AsBffApiEndpoint();
 
-            app.MapBffManagementEndpoints();
-
-            // enable proxying to remote API
-            
-            app.MapRemoteBffApiEndpoint("/api/billing", "https://localhost:7013/api/v1/");
-                // .RequireAccessToken();
-            
-            app.MapRemoteBffApiEndpoint("/api/registry", "https://localhost:7253/api/v1/");
-                //.RequireAccessToken();
+          
 
             return app;
+        }
+
+        private static void SetupApiServices(WebApplication app)
+        {
+            using (var scope = app.Services.CreateScope())
+            {
+                var apiServices = scope.ServiceProvider.GetService<List<ApiServiceSetting>>();
+
+                app.MapBffManagementEndpoints();
+                Log.Information($"Initializing Services...");
+                // enable proxying to remote API
+                apiServices.ForEach(s =>
+                {
+                    app.MapRemoteBffApiEndpoint(s.LocalPath, s.ApiAddress);
+                    Log.Information($"Initializing Service [{s.Name}]");
+                    // .RequireAccessToken();    
+                });
+                
+                Log.Information($"Initialized [{apiServices.Count}] Services !");
+            }
         }
     }
 }

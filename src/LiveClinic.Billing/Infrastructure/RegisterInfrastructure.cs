@@ -2,6 +2,7 @@
 using LiveClinic.Billing.Infrastructure.Data;
 using LiveClinic.Shared;
 using LiveClinic.Shared.Common;
+using LiveClinic.Shared.Common.Settings;
 using MassTransit;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

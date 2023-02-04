@@ -8,7 +8,7 @@
         <IsPackable>false</IsPackable>
         <SpaRoot>ClientApp\</SpaRoot>
         <DefaultItemExcludes>$(DefaultItemExcludes);$(SpaRoot)node_modules\**</DefaultItemExcludes>
-        <SpaProxyServerUrl>https://localhost:44467</SpaProxyServerUrl>
+        <SpaProxyServerUrl>https://localhost:3000</SpaProxyServerUrl>
         <SpaProxyLaunchCommand>npm start</SpaProxyLaunchCommand>
         <ImplicitUsings>disable</ImplicitUsings>
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
@@ -35,14 +35,12 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="ClientApp\src\auth" />
-      <Folder Include="ClientApp\src\billing" />
-      <Folder Include="ClientApp\src\utils" />
+      <_ContentIncludedByDefault Remove="Pages\Error.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\_ViewImports.cshtml" />
     </ItemGroup>
 
     <ItemGroup>
-      <_ContentIncludedByDefault Remove="Pages\Error.cshtml" />
-      <_ContentIncludedByDefault Remove="Pages\_ViewImports.cshtml" />
+      <ProjectReference Include="..\LiveClinic.Shared\LiveClinic.Shared.csproj" />
     </ItemGroup>
 
     <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
