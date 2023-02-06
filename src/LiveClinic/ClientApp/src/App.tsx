@@ -15,7 +15,7 @@ const App: FC = () => {
                 <Routes>
                     <Route path="/" element={<Home/>}/>
                     <Route path="/registry" element={<Patients/>}/>
-                    <Route path="/registry/:patientId" element={<PatientProfile/>}/>
+                    <Route path="/registry/patient/:patientId" element={<PatientProfile/>}/>
                 </Routes>
                 <Footer/>
             </BrowserRouter>

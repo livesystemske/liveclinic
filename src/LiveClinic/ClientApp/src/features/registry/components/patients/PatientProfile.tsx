@@ -3,50 +3,79 @@ import {Patient} from "../../models/patient";
 import {useQuery} from "react-query";
 import {patientService} from "../../services/patient-service";
 import {useParams} from "react-router-dom";
-import {useForm} from "react-hook-form";
 import {Card} from "primereact/card";
+import {ProgressBar} from "primereact/progressbar";
+import {Message} from "primereact/message";
+import {useForm, SubmitHandler} from "react-hook-form";
+import {InputText} from "primereact/inputtext";
+import {Dropdown} from "primereact/dropdown";
 
-type FormAction= {
+interface FormAction {
     title?: string
-    showEdit?:boolean
-    showSave?:boolean
+    showEdit?: boolean
 }
+
+type Inputs = {
+    firstName: string,
+    lastName: string,
+    gender: number,
+    birthDate: Date,
+};
+
+const gender = [
+    { name: 'Male', value:1 },
+    { name: 'Female', value: 0 }
+];
+
 const PatientProfile: FC = () => {
-
-    const [action,setAction]=useState<FormAction>({
-        title: 'Register New',
-        showEdit: false,
-        showSave: true
-    });
+    const [selectedGender, setSelectedGender] = useState(0);
     const {patientId} = useParams()
-    const {isLoading, error, data} = useQuery<Patient, Error>('patient', async () => patientService.getById(patientId));
-
+    const {register, handleSubmit, watch, formState: {errors}} = useForm<Inputs>();
+    const [action, setAction] = useState<FormAction>({
+        title: 'Register New',
+        showEdit: false
+    });
+    const {
+        status,
+        isLoading,
+        error,
+        data
+    } = useQuery<Patient, Error>('patient', async () => patientService.getById(patientId));
+    const onSubmit: SubmitHandler<Inputs> = fdata => {
+        // fdata.gender = selectedGender
+        console.log(fdata)
+    }
     useEffect(() => {
-       if (data?.id){
-           setAction(prevState => ({
-               ...prevState,title:'View/Edit Patient'
-           }))
-       }
-    }, []);
+        if (status === 'success') {
+            console.log('success >>>  ', patientId, data?.id)
+            setAction({
+                title: data?.id ? 'View/Edit Patient' : 'Register New',
+                showEdit: data?.id ? true : false
+            });
+        }
+    }, [status, data]);
 
-    if (isLoading) return (<h1>Loading...</h1>)
+    if (isLoading) return <ProgressBar mode="indeterminate" style={{height: '6px'}}></ProgressBar>
 
-    if (error) return <h1>`An error has occurred: ${error.message}`</h1>
+    if (error) return <Message severity="error" text={`An error has occurred: ${error.message}`}/>
 
     return (
         <Card title={action.title}>
-            <p>Hey</p>
-            {/*<form onSubmit={handleSubmit(onSubmit)}>*/}
-            {/*    /!* register your input into the hook by invoking the "register" function *!/*/}
-            {/*    <input defaultValue="test" {...register("example")} />*/}
+            <form onSubmit={handleSubmit(onSubmit)}>
+                <label htmlFor="firstName">firstName</label>
+                <InputText id="firstName" value={data?.patientName?.firstName}  {...register("firstName", {required: true})} />
+                {errors.firstName && <span>*</span>}
+                <label htmlFor="lastName">lastName</label>
+                <InputText id="lastName"  value={data?.patientName?.lastName} {...register("lastName", {required: true})} />
+                {errors.lastName && <span>*</span>}
+                <label htmlFor="gender">gender</label>
+                <Dropdown ref= register("firstName", {required: true}) onChange={(e) => setSelectedGender(e.value)} id="gender"  optionLabel="name" value={data?.gender} options={gender} placeholder="Select Gender"/>
 
-            {/*    /!* include validation with required or other standard HTML validation rules *!/*/}
-            {/*    <input {...register("exampleRequired", { required: true })} />*/}
-            {/*    /!* errors will return when field validation fails  *!/*/}
-            {/*    {errors.exampleRequired && <span>This field is required</span>}*/}
-
-            {/*    <input type="submit" />*/}
-            {/*</form>*/}
+                {/*<label htmlFor="birthDate">birthDate</label>*/}
+                {/*<input type="date" id="birthDate"   {...register("birthDate", {pattern:/yyy/i, value:data?.birthDate, valueAsDate:true, required: true})} />*/}
+                {/*    {errors.birthDate && <span>*</span>}*/}
+                <input type="submit"/>
+            </form>
         </Card>
     );
 }
