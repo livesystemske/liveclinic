@@ -18,6 +18,11 @@ namespace LiveClinic.Shared.Domain
             LastName = lastName.ToUpper();
         }
 
+        public static PersonName From(string firstName, string lastName)
+        {
+            return new PersonName(firstName, lastName);
+        }
+        
         protected override IEnumerable<object> GetEqualityComponents()
         {
             yield return FirstName;
@@ -29,9 +34,6 @@ namespace LiveClinic.Shared.Domain
             return $"{LastName}, {FirstName}";
         }
 
-        public static PersonName From(string firstName, string lastName)
-        {
-            return new PersonName(firstName, lastName);
-        }
+      
     }
 }

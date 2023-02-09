@@ -49,7 +49,23 @@ namespace LiveClinic.Registry.Domain
                 dto.BirthDate
             );
         }
+        
+        public static Patient From(EditPatientDto dto)
+        {
+            return new Patient(
+                PersonName.From(dto.FirstName,dto.LastName),
+                dto.Gender,
+                dto.BirthDate,
+                dto.Id
+            );
+        }
 
+        public void UpdateFrom(EditPatientDto requestPatient)
+        {
+            PatientName = PersonName.From(requestPatient.FirstName, requestPatient.LastName);
+            Gender = requestPatient.Gender;
+            BirthDate = requestPatient.BirthDate;
+        }
         public override string ToString()
         {
             return $"{MemberNo} | {PatientName} ({Gender}),{BirthDate:yyyy MMM dd} ";

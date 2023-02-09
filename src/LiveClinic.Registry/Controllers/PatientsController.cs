@@ -71,6 +71,23 @@ namespace LiveClinic.Registry.Controllers
                 return StatusCode(500, e.Message);
             }
         }
+        
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdatePatient(long id, EditPatientDto patient)
+        {
+            try
+            {
+                var res = await _mediator.Send(new RegisterPatientCommand(patient));
+                if (res.IsSuccess)
+                    return Ok();
+                throw new Exception(res.Error);
+            }
+            catch (Exception e)
+            {
+                Log.Error(e, "RegisterPatient Error");
+                return StatusCode(500, e.Message);
+            }
+        }
 
         [HttpPost("Encounter")]
         public async Task<IActionResult> NewPatientEncounter(NewEncounterDto encounter)

@@ -26,7 +26,7 @@ class PatientService {
     }
 
     async update(patient: Patient) {
-        await this.http.post(`${this.url}`,patient);
+        await this.http.put(`${this.url}/${patient.id}`,patient);
     }
 
 

@@ -26,6 +26,7 @@ const initialState: FormAction = {
 }
 
 const defaultValues = {
+    id:0,
     firstName: '',
     lastName: '',
     gender: Gender.Female,
@@ -49,6 +50,7 @@ const PatientProfile: FC = () => {
                     title: data?.id ? `View/Edit Patient` : 'Register New',
                     showEdit: data?.id ? true : false
                 });
+                setValue('id', data?.id ? data?.id : 0);
                 setValue('firstName', data?.patientName?.firstName ? data?.patientName?.firstName : '');
                 setValue('lastName', data?.patientName?.lastName ? data?.patientName?.lastName : '');
                 setValue('gender', data?.gender ? data.gender : Gender.Male);
@@ -59,7 +61,7 @@ const PatientProfile: FC = () => {
     const mutation = useMutation(async (formData:Patient) => {
         if (action.showEdit)
         {
-            // return await patientService.register( formData)
+            return await patientService.update( formData)
         }else {
             return await patientService.register( formData)
             reset()
