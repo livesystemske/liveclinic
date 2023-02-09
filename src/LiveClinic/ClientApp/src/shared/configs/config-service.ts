@@ -4,7 +4,8 @@ import {QueryClient} from "react-query";
 class ConfigService {
     getQueryClient() {
 
-        const queryClient = new QueryClient({
+        const queryClient = new QueryClient(
+            /*{
                 defaultOptions: {
                     queries: {
                         refetchOnWindowFocus: false,
@@ -14,7 +15,7 @@ class ConfigService {
                         staleTime: 5 * 60 * 1000,
                     },
                 },
-            }
+            }*/
         )
         return queryClient;
     }

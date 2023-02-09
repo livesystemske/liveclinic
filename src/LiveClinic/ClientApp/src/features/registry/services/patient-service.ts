@@ -20,6 +20,18 @@ class PatientService {
         const result = await this.http.get<Patient>(`${this.url}/${id}`);
         return result.data || [];
     }
+
+    async register(patient: Patient) {
+        await this.http.post(`${this.url}`,patient);
+    }
+
+    async update(patient: Patient) {
+        await this.http.post(`${this.url}`,patient);
+    }
+
+
+
+
 }
 
 const patientService = new PatientService();
