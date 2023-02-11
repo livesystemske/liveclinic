@@ -26,6 +26,7 @@ namespace LiveClinic.Registry.Infrastructure
                 .AddJwtBearer("Bearer",options =>
                 {
                     options.Authority = authSettings.Authority;
+                    options.Audience = "liveclinicregistry_api";
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateAudience = false

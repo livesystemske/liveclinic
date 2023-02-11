@@ -8,6 +8,7 @@ import {Toolbar} from "primereact/toolbar";
 import {useNavigate} from "react-router-dom";
 import {ProgressBar} from "primereact/progressbar";
 import {Message} from "primereact/message";
+import {useAuthUser} from "../../../auth/services/useAuthUser";
 
 
 const Patients: FC = () => {

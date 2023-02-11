@@ -55,7 +55,7 @@ const PatientProfile: FC = () => {
                 setValue('lastName', data?.patientName?.lastName ? data?.patientName?.lastName : '');
                 setValue('gender', data?.gender ? data.gender : Gender.Male);
                 setValue('birthDate', data?.birthDate ? new Date(data.birthDate) : new Date());
-                console.log(data.id)
+
             }
         });
 

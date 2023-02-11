@@ -1,5 +1,8 @@
 using System.Collections.Generic;
+using Duende.Bff;
 using Duende.Bff.Yarp;
+using LiveClinic.Application;
+using LiveClinic.Infrastructure;
 using LiveClinic.Shared.Common.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -20,44 +23,8 @@ namespace LiveClinic
 
             builder.Services.AddControllers();
 
-            // add BFF services and server-side session management
-            builder.Services.AddBff()
-                .AddRemoteApis()
-                .AddServerSideSessions();
-
-            builder.Services.AddAuthentication(options =>
-                {
-                    options.DefaultScheme = "cookie";
-                    options.DefaultChallengeScheme = "oidc";
-                    options.DefaultSignOutScheme = "oidc";
-                })
-                .AddCookie("cookie", options =>
-                {
-                    options.Cookie.Name = "__Host-bff";
-                    options.Cookie.SameSite = SameSiteMode.Strict;
-                })
-                .AddOpenIdConnect("oidc", options =>
-                {
-                    options.Authority = "https://demo.duendesoftware.com";
-                    options.ClientId = "interactive.confidential";
-                    options.ClientSecret = "secret";
-                    options.ResponseType = "code";
-                    options.ResponseMode = "query";
-
-                    options.GetClaimsFromUserInfoEndpoint = true;
-                    options.SaveTokens = true;
-                    options.MapInboundClaims = false;
-
-                    options.Scope.Clear();
-                    options.Scope.Add("openid");
-                    options.Scope.Add("profile");
-                    options.Scope.Add("api");
-                    options.Scope.Add("offline_access");
-
-                    options.TokenValidationParameters.NameClaimType = "name";
-                    options.TokenValidationParameters.RoleClaimType = "role";
-                });
-
+            builder.Services.RegisterAppInfrastructure(builder.Configuration);
+            builder.Services.RegisterApplicationServices(builder.Configuration);
             return builder.Build();
         }
 
@@ -76,17 +43,15 @@ namespace LiveClinic
             app.UseRouting();
 
             // add CSRF protection and status code handling for API endpoints
-            // app.UseBff();
+            app.UseBff();
             app.UseAuthorization();
 
             SetupApiServices(app);
             
             // local API endpoints
             app.MapControllers()
-                //.RequireAuthorization()
+                .RequireAuthorization()
                 .AsBffApiEndpoint();
-
-          
 
             return app;
         }
@@ -102,9 +67,11 @@ namespace LiveClinic
                 // enable proxying to remote API
                 apiServices.ForEach(s =>
                 {
-                    app.MapRemoteBffApiEndpoint(s.LocalPath, s.ApiAddress);
                     Log.Information($"Initializing Service [{s.Name}]");
-                    // .RequireAccessToken();    
+
+                    app.MapRemoteBffApiEndpoint(s.LocalPath, s.ApiAddress)
+                        .RequireAccessToken(TokenType.UserOrClient);
+                    //.SkipResponseHandling();
                 });
                 
                 Log.Information($"Initialized [{apiServices.Count}] Services !");

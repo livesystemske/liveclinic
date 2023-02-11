@@ -5,7 +5,7 @@ class ConfigService {
     getQueryClient() {
 
         const queryClient = new QueryClient(
-            /*{
+            {
                 defaultOptions: {
                     queries: {
                         refetchOnWindowFocus: false,
@@ -15,16 +15,18 @@ class ConfigService {
                         staleTime: 5 * 60 * 1000,
                     },
                 },
-            }*/
+            }
         )
         return queryClient;
     }
 
-    getHttpClient() {
+    getHttpClient(url = "") {
 
         const axiosInstance: AxiosInstance = axios.create({
-            baseURL: process.env.REACT_APP_LCS_API_URL,
+            baseURL: url === "" ? process.env.REACT_APP_LCS_API_URL : url,
+            withCredentials: true,
             headers: {
+                'X-CSRF': '1',
                 "Content-type": "application/json",
             },
         });
