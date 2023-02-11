@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using LiveClinic.Registry.Data;
+using LiveClinic.Registry.Infrastructure.Data;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 using Serilog;

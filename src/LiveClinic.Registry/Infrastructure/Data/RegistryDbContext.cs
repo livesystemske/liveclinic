@@ -1,7 +1,7 @@
 ﻿using LiveClinic.Registry.Domain;
 using Microsoft.EntityFrameworkCore;
 
-namespace LiveClinic.Registry.Data
+namespace LiveClinic.Registry.Infrastructure.Data
 {
     public class RegistryDbContext : DbContext
     {

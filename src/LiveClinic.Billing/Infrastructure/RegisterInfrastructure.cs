@@ -1,11 +1,11 @@
 ﻿using System.Reflection;
 using LiveClinic.Billing.Infrastructure.Data;
 using LiveClinic.Shared;
-using LiveClinic.Shared.Common;
 using LiveClinic.Shared.Common.Settings;
 using MassTransit;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 
 namespace LiveClinic.Billing.Infrastructure
 {
@@ -14,20 +14,32 @@ namespace LiveClinic.Billing.Infrastructure
         public static IServiceCollection RegisterAppInfrastructure(this IServiceCollection services,IConfiguration configuration)
         {
             services.AddSqliteDatabase<BillingDbContext>(configuration);
+            services.SetupIdentity(configuration);
             services.SetupTransport(configuration);
+            return services;
+        }
+        
+        private static IServiceCollection SetupIdentity(this IServiceCollection services,IConfiguration configuration)
+        {
+            var authSettings=configuration.GetSection(LiveAuthSetting.Key).Get<LiveAuthSetting>();
+            services.AddSingleton(authSettings);
+            services.AddAuthentication("Bearer")
+                .AddJwtBearer("Bearer",options =>
+                {
+                    options.Authority = authSettings.Authority;
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateAudience = false
+                    };
+                });
             return services;
         }
         
         private static IServiceCollection SetupTransport(this IServiceCollection services,IConfiguration configuration)
         {
             
-            var transportSetting = new TransportSetting(
-                configuration.GetValue<string>($"{TransportSetting.Key}:{nameof(TransportSetting.Mode)}"),
-                configuration.GetValue<string>($"{TransportSetting.Key}:{nameof(TransportSetting.Host)}"),
-                configuration.GetValue<string>($"{TransportSetting.Key}:{nameof(TransportSetting.VHost)}"),
-                configuration.GetValue<string>($"{TransportSetting.Key}:{nameof(TransportSetting.User)}"),
-            configuration.GetValue<string>($"{TransportSetting.Key}:{nameof(TransportSetting.Password)}")
-            );
+            var transportSetting=configuration.GetSection(TransportSetting.Key).Get<TransportSetting>();
+            services.AddSingleton(transportSetting);
          
             if (transportSetting.Mode == "RabbitMQ")
             {

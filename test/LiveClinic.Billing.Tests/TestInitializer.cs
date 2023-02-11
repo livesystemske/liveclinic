@@ -6,7 +6,6 @@ using LiveClinic.Billing.Application;
 using LiveClinic.Billing.Domain;
 using LiveClinic.Billing.Infrastructure;
 using LiveClinic.Billing.Infrastructure.Data;
-using LiveClinic.Billing.ServicesRegistration;
 using LiveClinic.Contracts;
 using LiveClinic.Shared.Domain;
 using MassTransit;

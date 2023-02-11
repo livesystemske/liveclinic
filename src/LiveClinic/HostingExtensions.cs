@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Duende.Bff.Yarp;
 using LiveClinic.Shared.Common.Settings;

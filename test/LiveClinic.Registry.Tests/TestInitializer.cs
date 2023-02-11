@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using LiveClinic.Contracts;
 using LiveClinic.Registry.Application;
-using LiveClinic.Registry.Data;
 using LiveClinic.Registry.Domain;
 using LiveClinic.Registry.Infrastructure;
-using LiveClinic.Registry.ServicesRegistration;
+using LiveClinic.Registry.Infrastructure.Data;
 using LiveClinic.Shared.Domain;
 using MassTransit;
 using MassTransit.Testing;

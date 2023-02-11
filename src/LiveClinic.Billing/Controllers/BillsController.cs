@@ -4,6 +4,7 @@ using LiveClinic.Billing.Application.Commands;
 using LiveClinic.Billing.Application.Dtos;
 using LiveClinic.Billing.Application.Queries;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
 
@@ -13,6 +14,7 @@ namespace LiveClinic.Billing.Controllers
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
+    [Authorize]
     public class BillsController : ControllerBase
     {
          private readonly IMediator _mediator;

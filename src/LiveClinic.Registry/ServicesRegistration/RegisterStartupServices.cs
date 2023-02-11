@@ -3,13 +3,13 @@ using LiveClinic.Registry.Application;
 using LiveClinic.Registry.Infrastructure;
 using LiveClinic.Shared.Common;
 using LiveClinic.Shared.Common.Settings;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Serilog;
 
@@ -38,21 +38,6 @@ namespace LiveClinic.Registry.ServicesRegistration
                     .ReadFrom.Configuration(hostContext.Configuration)
                     .Enrich.WithProperty("ApplicationName", hostContext.HostingEnvironment.ApplicationName);
             });
-            
-            var liveAuthSetting = builder.Configuration.GetSection(LiveAuthSetting.Key).Get<LiveAuthSetting>();
-            builder.Services.AddSingleton(liveAuthSetting);
-            var transportSetting = builder.Configuration.GetSection(TransportSetting.Key).Get<TransportSetting>();
-            builder.Services.AddSingleton(transportSetting);
-            builder.Services.Configure<LiveAuthSetting>(builder.Configuration.GetSection(LiveAuthSetting.Key));
-            builder.Services.AddAuthentication("Bearer")
-                .AddJwtBearer("Bearer", options =>
-                {
-                    options.Authority = liveAuthSetting.Authority;
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateAudience = false
-                    };
-                });
             
             builder.Services.AddApiVersioning(apiVerConfig =>
             {
@@ -92,7 +77,7 @@ namespace LiveClinic.Registry.ServicesRegistration
                 options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
                 {
                     Type = SecuritySchemeType.OAuth2,
-                    Flows = SetUpFlow(liveAuthSetting)
+                    Flows = SetUpFlow(builder.Configuration.GetSection(LiveAuthSetting.Key).Get<LiveAuthSetting>())
                 });
                 options.OperationFilter<AuthorizeCheckOperationFilter>();
             });

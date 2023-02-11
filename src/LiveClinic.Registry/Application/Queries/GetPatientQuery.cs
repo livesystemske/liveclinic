@@ -2,8 +2,8 @@
 using System.Threading;
 using System.Threading.Tasks;
 using CSharpFunctionalExtensions;
-using LiveClinic.Registry.Data;
 using LiveClinic.Registry.Domain;
+using LiveClinic.Registry.Infrastructure.Data;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Serilog;

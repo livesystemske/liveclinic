@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using CSharpFunctionalExtensions;
 using LiveClinic.Billing.Application.Dtos;
 using LiveClinic.Billing.Domain;
-using LiveClinic.Billing.Domain.Events;
 using LiveClinic.Billing.Infrastructure.Data;
 using MediatR;
 using Serilog;

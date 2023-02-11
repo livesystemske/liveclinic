@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq;
-using LiveClinic.Registry.Data;
+using LiveClinic.Registry.Infrastructure.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.DependencyInjection;

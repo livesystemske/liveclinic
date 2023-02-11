@@ -36,7 +36,7 @@ namespace LiveClinic.Shared.Common
                                     Type = ReferenceType.SecurityScheme,
                                     Id = "oauth2"}
                             }
-                        ] = new[] { _liveAuthSetting.Scope }
+                        ] = _liveAuthSetting.ReadScopes
                     }
                 };
 
