@@ -4,6 +4,7 @@ using LiveClinic.Registry.Application.Commands;
 using LiveClinic.Registry.Application.Dtos;
 using LiveClinic.Registry.Application.Queries;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
 
@@ -12,6 +13,7 @@ namespace LiveClinic.Registry.Controllers
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
+    [Authorize]
     public class PatientsController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -77,7 +79,7 @@ namespace LiveClinic.Registry.Controllers
         {
             try
             {
-                var res = await _mediator.Send(new RegisterPatientCommand(patient));
+                var res = await _mediator.Send(new UpdatePatientCommand(patient));
                 if (res.IsSuccess)
                     return Ok();
                 throw new Exception(res.Error);

@@ -12,6 +12,18 @@ namespace LiveClinic.Shared.Common.Settings
         public string Flow { get; set; }
         public Dictionary<string, string> Scopes => GetScopes();
 
+        public LiveAuthSetting()
+        {
+        }
+
+        public LiveAuthSetting(string authority, string clientId, string secret, string scope)
+        {
+            Authority = authority;
+            ClientId = clientId;
+            Secret = secret;
+            Scope = scope;
+        }
+
         private Dictionary<string, string> GetScopes()
         {
             if (!string.IsNullOrWhiteSpace(Scope))
@@ -19,5 +31,6 @@ namespace LiveClinic.Shared.Common.Settings
 
             return new();
         }
+        
     }
 }

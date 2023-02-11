@@ -55,12 +55,14 @@ const PatientProfile: FC = () => {
                 setValue('lastName', data?.patientName?.lastName ? data?.patientName?.lastName : '');
                 setValue('gender', data?.gender ? data.gender : Gender.Male);
                 setValue('birthDate', data?.birthDate ? new Date(data.birthDate) : new Date());
+                console.log(data.id)
             }
         });
 
     const mutation = useMutation(async (formData:Patient) => {
         if (action.showEdit)
         {
+            console.log(formData)
             return await patientService.update( formData)
         }else {
             return await patientService.register( formData)
