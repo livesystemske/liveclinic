@@ -3,6 +3,7 @@ using LiveClinic.Infrastructure.Data;
 using LiveClinic.Shared;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -20,7 +21,14 @@ namespace LiveClinic.Infrastructure
         private static IServiceCollection SetupIdentity(this IServiceCollection services,IConfiguration configuration)
         {
             // add BFF services and server-side session management
-            services.AddBff()
+            services.AddBff(options =>
+                {
+                    options.EnableSessionCleanup = true;
+                })
+                .AddEntityFrameworkServerSideSessions(options=> 
+                {
+                    options.UseSqlite(configuration.GetConnectionString("LiveConnection"));        
+                })
                 .AddRemoteApis()
                 .AddServerSideSessions();
 

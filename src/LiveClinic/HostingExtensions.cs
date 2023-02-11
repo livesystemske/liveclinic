@@ -1,8 +1,10 @@
+using System;
 using System.Collections.Generic;
 using Duende.Bff;
 using Duende.Bff.Yarp;
 using LiveClinic.Application;
 using LiveClinic.Infrastructure;
+using LiveClinic.Infrastructure.Data;
 using LiveClinic.Shared.Common.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -52,7 +54,7 @@ namespace LiveClinic
             app.MapControllers()
                 .RequireAuthorization()
                 .AsBffApiEndpoint();
-
+            SeedData(app);
             return app;
         }
 
@@ -75,6 +77,24 @@ namespace LiveClinic
                 });
                 
                 Log.Information($"Initialized [{apiServices.Count}] Services !");
+            }
+        }
+        
+        private static void SeedData(WebApplication app)
+        {
+            using (var scope = app.Services.CreateScope())
+            {
+                var context = scope.ServiceProvider.GetService<LiveClinicDbContext>();
+                try
+                {
+                    context.Database.EnsureCreated();
+                    context.Seed();
+                    Log.Debug($"initializing Database [OK]");
+                }
+                catch (Exception e)
+                {
+                    Log.Error(e,$"initializing Database Error");
+                }
             }
         }
     }
