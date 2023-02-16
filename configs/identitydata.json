@@ -1,0 +1,116 @@
+﻿{
+  "IdentityData": {
+    "Roles": [
+      {
+        "Name": "Administrator",
+        "Claims": [
+          {
+            "Type": "permission",
+            "Value": "system.all"
+          }
+        ]
+      },
+      {
+        "Name": "Records",
+        "Claims": [
+          {
+            "Type": "permission",
+            "Value": "registry.read"
+          },
+          {
+            "Type": "permission",
+            "Value": "registry.manage"
+          }
+        ]
+      },
+      {
+        "Name": "Finance",
+        "Claims": [
+          {
+            "Type": "permission",
+            "Value": "registry.read"
+          },
+          {
+            "Type": "permission",
+            "Value": "billing.read"
+          },
+          {
+            "Type": "permission",
+            "Value": "billing.manage"
+          }
+        ]
+      },
+      {
+        "Name": "Clinician",
+        "Claims": [
+          {
+            "Type": "permission",
+            "Value": "registry.read"
+          },
+          {
+            "Type": "permission",
+            "Value": "billing.read"
+          }
+        ]
+      }
+    ],
+    "Users": [
+      {
+        "Username": "admin",
+        "Password": "Pa$$word123",
+        "Email": "koskedk@live.com",
+        "Roles": [
+          "Administrator"
+        ],
+        "Claims": [
+          {
+            "Type": "name",
+            "Value": "admin"
+          }
+        ]
+      },
+      {
+        "Username": "records",
+        "Password": "Pa$$word123",
+        "Email": "danmegga@gmail.com",
+        "Roles": [
+          "Records"
+        ],
+        "Claims": [
+          {
+            "Type": "name",
+            "Value": "records"
+          }
+        ]
+      },
+      {
+        "Username": "finance",
+        "Password": "Pa$$word123",
+        "Email": "koskedk@gmail.com",
+        "Roles": [
+          "Finance"
+        ],
+        "Claims": [
+          {
+            "Type": "name",
+            "Value": "finance"
+          }
+        ]
+      },
+      {
+        "Username": "clinician",
+        "Password": "Pa$$word123",
+        "Email": "eticasystem@gmail.com",
+        "Roles": [
+          "Clinician"
+        ],
+        "Claims": [
+          {
+            "Type": "name",
+            "Value": "clinician"
+          }
+        ]
+      }
+    ]
+  }
+}

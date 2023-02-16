@@ -1,0 +1,142 @@
+﻿{
+    "IdentityServerData": {
+        "IdentityResources": [
+            {
+                "Name": "roles",
+                "Enabled": true,
+                "DisplayName": "Roles",
+                "UserClaims": ["role"]
+            },
+            {
+                "Name": "openid",
+                "Enabled": true,
+                "Required": true,
+                "DisplayName": "Your user identifier",
+                "UserClaims": ["sub"]
+            },
+            {
+                "Name": "profile",
+                "Enabled": true,
+                "DisplayName": "User profile",
+                "Description": "Your user profile information (first name, last name, etc.)",
+                "Emphasize": true,
+                "UserClaims": ["name","family_name","given_name","middle_name","profile","email"]
+            }
+        ],
+        "ApiScopes": [
+            {
+                "Name": "authadmin",
+                "DisplayName": "Access authadmin",
+                "UserClaims": ["role","name"]
+            },
+            {
+                "Name": "registry.read",
+                "DisplayName": "Access Registry"
+            },
+            {
+                "Name": "registry.manage",
+                "DisplayName": "Manages registry"
+            },
+            {
+                "Name": "billing.read",
+                "DisplayName": "Access billing"
+            },
+            {
+                "Name": "billing.manage",
+                "DisplayName": "Manages bills"
+            }
+        ],
+        "ApiResources": [
+            {
+                "Name": "authadmin",
+                "DisplayName": "AuthAdmin API",
+                "Scopes": ["authadmin"]
+            },
+            {
+                "Name": "liveclinic",
+                "DisplayName": "Live Clinic BFF",
+                "Scopes": ["registry.read","registry.manage","billing.read","billing.manage","roles","openid","profile"]
+            },
+            {
+                "Name": "registry",
+                "DisplayName": "Registry API",
+                "Scopes": ["registry.read","registry.manage"]
+            },
+            {
+                "Name": "billing",
+                "DisplayName": "Billing API",
+                "Scopes": ["billing.read","billing.manage"]
+            }           
+        ],
+        "Clients": [
+            {
+                "ClientId": "authadmin",
+                "ClientName": "authadmin",
+                "ClientUri": "https://localhost/liveclinicauthadmin",
+                "AllowedGrantTypes": ["authorization_code"],
+                "RequirePkce": false,
+                "ClientSecrets": [{"Value": "authadmin"}],
+                "RedirectUris": ["https://localhost/liveclinicauthadmin/signin-oidc"],
+                "FrontChannelLogoutUri": "https://localhost/liveclinicauthadmin/signout-oidc",
+                "PostLogoutRedirectUris": ["https://localhost/liveclinicauthadmin/signout-callback-oidc"],
+                "AllowedCorsOrigins": ["https://localhost"],
+                "AllowedScopes": ["roles","openid","profile"],
+                "AllowOfflineAccess":true,
+                "AlwaysIncludeUserClaimsInIdToken":true
+            },
+            {
+                "ClientId": "authadmin.swaggerui",
+                "ClientName": "authadmin.swaggerui",
+                "AllowedGrantTypes": ["authorization_code"],
+                "RequireClientSecret": false,
+                "RequirePkce": false,
+                "RedirectUris": ["https://localhost/liveclinicauthadminapi/swagger/oauth2-redirect.html"],
+                "AllowedScopes": ["authadmin","roles","openid","profile"],
+                "AllowedCorsOrigins": ["https://localhost"],
+                "AllowOfflineAccess":true,
+                "AlwaysIncludeUserClaimsInIdToken":true
+            },
+            {
+                "ClientId": "liveclinic",
+                "ClientName": "liveclinic",
+                "ClientUri": "https://localhost:7000",
+                "AllowedGrantTypes": ["authorization_code"],
+                "RequireClientSecret": false,
+                "RequirePkce": false,
+                "RedirectUris": ["https://localhost:7000/signin-oidc"],
+                "FrontChannelLogoutUri": "https://localhost:7000/signout-oidc",
+                "PostLogoutRedirectUris": ["https://localhost:7000/signout-callback-oidc"],
+                "AllowedScopes": ["registry.read","registry.manage","billing.read","billing.manage","roles","openid","profile"],
+                "AllowedCorsOrigins": ["https://localhost:7000"],
+                "AllowOfflineAccess":true,
+                "AlwaysIncludeUserClaimsInIdToken":true
+            },
+            {
+                "ClientId": "registry",
+                "ClientName": "registry",
+                "AllowedGrantTypes": ["authorization_code","client_credentials"],
+                "ClientSecrets": [{"Value": "registry"}],
+                "RequireClientSecret": false,
+                "RequirePkce": false,
+                "RedirectUris": ["https://localhost:7010/swagger/oauth2-redirect.html"],
+                "AllowedScopes": ["registry.read","registry.manage"],
+                "AllowedCorsOrigins": ["https://localhost:7010","https://localhost:7000"],
+                "AllowOfflineAccess":true,
+                "AlwaysIncludeUserClaimsInIdToken":true
+            },
+            {
+                "ClientId": "billing",
+                "ClientName": "billing",
+                "AllowedGrantTypes": ["authorization_code","client_credentials"],
+                "ClientSecrets": [{"Value": "billing"}],
+                "RequireClientSecret": false,
+                "RequirePkce": false,
+                "RedirectUris": ["https://localhost:7020/swagger/oauth2-redirect.html"],
+                "AllowedScopes": ["billing.read","billing.manage"],
+                "AllowedCorsOrigins": ["https://localhost:7020","https://localhost:7000"],
+                "AllowOfflineAccess":true,
+                "AlwaysIncludeUserClaimsInIdToken":true
+            }
+        ]
+    }
+}

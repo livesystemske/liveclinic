@@ -1,0 +1,121 @@
+{
+  "ConnectionStrings": {
+    "ConfigurationDbConnection": "Server=.\\koske19;Database=LiveClinicAuth;User Id=sa;Password=maun;MultipleActiveResultSets=true;Encrypt=False",
+    "PersistedGrantDbConnection": "Server=.\\koske19;Database=LiveClinicAuth;User Id=sa;Password=maun;MultipleActiveResultSets=true;Encrypt=False",
+    "IdentityDbConnection": "Server=.\\koske19;Database=LiveClinicAuth;User Id=sa;Password=maun;MultipleActiveResultSets=true;Encrypt=False",
+    "DataProtectionDbConnection": "Server=.\\koske19;Database=LiveClinicAuth;User Id=sa;Password=maun;MultipleActiveResultSets=true;Encrypt=False"
+  },
+  "DatabaseProviderConfiguration": {
+    "ProviderType": "SqlServer"
+  },
+  "CertificateConfiguration": {
+
+    "UseTemporarySigningKeyForDevelopment": true,
+
+    "CertificateStoreLocation": "LocalMachine",
+    "CertificateValidOnly": true,
+
+    "UseSigningCertificateThumbprint": false,
+    "SigningCertificateThumbprint": "",
+
+    "UseSigningCertificatePfxFile": false,
+    "SigningCertificatePfxFilePath": "",
+    "SigningCertificatePfxFilePassword": "",
+
+    "UseValidationCertificatePfxFile": false,
+    "ValidationCertificatePfxFilePath": "",
+    "ValidationCertificatePfxFilePassword": "",
+
+    "UseValidationCertificateThumbprint": false,
+    "ValidationCertificateThumbprint": "",
+
+    "UseSigningCertificateForAzureKeyVault": false,
+    "UseValidationCertificateForAzureKeyVault": false
+  },
+  "RegisterConfiguration": {
+    "Enabled": false
+  },
+
+  "ExternalProvidersConfiguration": {
+    "UseGitHubProvider": false,
+    "GitHubClientId": "",
+    "GitHubClientSecret": "",
+    "UseAzureAdProvider": false,
+    "AzureAdClientId": "",
+    "AzureAdTenantId": "",
+    "AzureInstance": "",
+    "AzureAdSecret": "",
+    "AzureAdCallbackPath": "",
+    "AzureDomain": ""
+  },
+  "SmtpConfiguration": {
+    "Host": "",
+    "Login": "",
+    "Password": ""
+  },
+  "SendGridConfiguration": {
+    "ApiKey": "",
+    "SourceEmail": "",
+    "SourceName": ""
+  },
+  "LoginConfiguration": {
+    "ResolutionPolicy": "Username"
+  },
+  "AdminConfiguration": {
+    "PageTitle": "Live Clinic Auth IdentityServer",
+    "HomePageLogoUri": "~/images/LiveLogo.png",
+    "FaviconUri": "~/favicon.ico",
+    "Theme": null,
+    "CustomThemeCss": null,
+    "IdentityAdminBaseUrl": "https://localhost/liveclinicauthadmin/",
+    "AdministrationRole": "Administrator"
+  },
+  "CspTrustedDomains": [
+    "www.gravatar.com",
+    "fonts.googleapis.com",
+    "fonts.gstatic.com"
+  ],
+  "CultureConfiguration": {
+    "Cultures": [],
+    "DefaultCulture": null
+  },
+  "IdentityServerOptions": {
+    "KeyManagement": {
+      "Enabled": true
+    },
+    "Events": {
+      "RaiseErrorEvents": true,
+      "RaiseInformationEvents": true,
+      "RaiseFailureEvents": true,
+      "RaiseSuccessEvents": true
+    }
+  },
+  "BasePath": "/liveclinicauth",
+  "IdentityOptions": {
+    "Password": {
+      "RequiredLength": 8
+    },
+    "User": {
+      "RequireUniqueEmail": true
+    },
+    "SignIn": {
+      "RequireConfirmedAccount": false
+    }
+  },
+
+  "DataProtectionConfiguration": {
+    "ProtectKeysWithAzureKeyVault": false
+  },
+  "AzureKeyVaultConfiguration": {
+    "AzureKeyVaultEndpoint": "",
+    "ClientId": "",
+    "ClientSecret": "",
+    "TenantId": "",
+    "GitHubCallbackPath": "",
+    "UseClientCredentials": true,
+    "IdentityServerCertificateName": "",
+    "DataProtectionKeyIdentifier": "",
+    "ReadConfigurationFromKeyVault": false
+  },
+  "Spi": false
+}
