@@ -1,0 +1,14 @@
+﻿namespace LiveAuth.STS.Identity.ViewModels.Account
+{
+    public class RegisterConfirmationViewModel
+    {
+        
+    }
+}
+
+
+
+
+
+
+

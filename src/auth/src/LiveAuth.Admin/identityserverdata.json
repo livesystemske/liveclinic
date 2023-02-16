@@ -1,0 +1,138 @@
+﻿{
+    "IdentityServerData": {
+        "IdentityResources": [
+            {
+                "Name": "roles",
+                "Enabled": true,
+                "DisplayName": "Roles",
+                "UserClaims": [
+                    "role"
+                ]
+            },
+            {
+                "Name": "openid",
+                "Enabled": true,
+                "Required": true,
+                "DisplayName": "Your user identifier",
+                "UserClaims": [
+                    "sub"
+                ]
+            },
+            {
+                "Name": "profile",
+                "Enabled": true,
+                "DisplayName": "User profile",
+                "Description": "Your user profile information (first name, last name, etc.)",
+                "Emphasize": true,
+                "UserClaims": [
+                    "name",
+                    "family_name",
+                    "given_name",
+                    "middle_name",
+                    "nickname",
+                    "preferred_username",
+                    "profile",
+                    "picture",
+                    "website",
+                    "gender",
+                    "birthdate",
+                    "zoneinfo",
+                    "locale",
+                    "updated_at"
+                ]
+            },
+            {
+                "Name": "email",
+                "Enabled": true,
+                "DisplayName": "Your email address",
+                "Emphasize": true,
+                "UserClaims": [
+                    "email",
+                    "email_verified"
+                ]
+            },
+            {
+                "Name": "address",
+                "Enabled": true,
+                "DisplayName": "Your address",
+                "Emphasize": true,
+                "UserClaims": [
+                    "address"
+                ]
+            }
+        ],
+        "ApiScopes": [
+            {
+                "Name": "liveauthadmin_api",
+                "DisplayName": "liveauthadmin_api",
+                "Required": true,
+                "UserClaims": [
+                    "role",
+                    "name"
+                ]
+            }
+        ],
+        "ApiResources": [
+            {
+                "Name": "liveauthadmin_api",
+                "Scopes": [
+                    "liveauthadmin_api"
+                ]
+            }
+        ],
+        "Clients": [
+            {
+                "ClientId": "live.auth.admin",
+                "ClientName": "live.auth.admin",
+                "ClientUri": "https://localhost/authadmin",
+                "AllowedGrantTypes": [
+                    "authorization_code"
+                ],
+                "RequirePkce": true,
+                "ClientSecrets": [
+                    {
+                        "Value": "liveauthadminsecret"
+                    }
+                ],
+                "RedirectUris": [
+                    "https://localhost/authadmin/signin-oidc"
+                ],
+                "FrontChannelLogoutUri": "https://localhost/authadmin/signout-oidc",
+                "PostLogoutRedirectUris": [
+                    "https://localhost/authadmin/signout-callback-oidc"
+                ],
+              "AllowedCorsOrigins": [
+                "https://localhost",
+                "https://livedev",
+                "https://livedev.local"
+              ],
+                "AllowedScopes": [
+                    "openid",
+                    "email",
+                    "profile",
+                    "roles"
+                ]
+            },
+            {
+                "ClientId": "live.auth.adminapi.swaggerui",
+                "ClientName": "live.auth.adminapi.swaggerui",
+                "AllowedGrantTypes": [
+                    "authorization_code"
+                ],
+                "RequireClientSecret": false,
+                "RequirePkce": true,
+                "RedirectUris": [
+                    "https://localhost/authadminapi/swagger/oauth2-redirect.html"
+                ],
+                "AllowedScopes": [
+                    "liveauthadmin_api"
+                ],
+              "AllowedCorsOrigins": [
+                "https://localhost",
+                "https://livedev",
+                "https://livedev.local"
+              ]
+            }
+        ]
+    }
+}

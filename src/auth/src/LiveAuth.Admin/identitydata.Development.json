@@ -1,0 +1,42 @@
+﻿{
+  "IdentityData": {
+    "Roles": [
+      {
+        "Name": "Administrator"
+      },
+      {
+        "Name": "User"
+      }
+    ],
+    "Users": [
+      {
+        "Username": "admin",
+        "Password": "Admin@4783",
+        "Email": "koskedk@live.com",
+        "Roles": [
+          "Administrator"
+        ],
+        "Claims": [
+          {
+            "Type": "name",
+            "Value": "admin"
+          }
+        ]
+      },
+      {
+        "Username": "user",
+        "Password": "User@4783",
+        "Email": "koskedk@gmail.com",
+        "Roles": [
+          "User"
+        ],
+        "Claims": [
+          {
+            "Type": "name",
+            "Value": "user"
+          }
+        ]
+      }
+    ]
+  }
+}

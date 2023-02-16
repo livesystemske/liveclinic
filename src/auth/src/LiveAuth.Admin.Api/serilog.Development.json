@@ -1,0 +1,24 @@
+﻿{
+    "Serilog": {
+        "MinimumLevel": {
+            "Default": "Information",
+            "Override": {
+                "Microsoft": "Information",
+                "Skoruba": "Information"
+            }
+        },
+        "WriteTo": [
+            {
+                "Name": "Console"
+            },
+            {
+                "Name": "File",
+                "Args": {
+                    "restrictedToMinimumLevel": "Error",
+                    "path": "Log/liveauth_adminapi_.log",
+                    "rollingInterval": "Day"
+                }
+            }
+        ]
+    }
+}

@@ -1,0 +1,36 @@
+﻿{
+    "Serilog": {
+        "MinimumLevel": {
+            "Default": "Debug",
+            "Override": {
+                "Microsoft": "Information",
+                "Skoruba": "Information"
+            }
+        },
+        "WriteTo": [
+            {
+                "Name": "Console"
+            },
+            {
+                "Name": "File",
+                "Args": {
+                    "restrictedToMinimumLevel": "Error",
+                    "path": "Log/liveauth_sts_.log",
+                    "rollingInterval": "Day"
+                }
+            },
+            {
+                "Name": "MSSqlServer",
+              "Args": {
+                "restrictedToMinimumLevel": "Error",
+                "connectionString": "Server=.\\koske19;Database=LiveAuth;User Id=sa;Password=maun;MultipleActiveResultSets=true;Encrypt=False",
+                "tableName": "Log",
+                "columnOptionsSection": {
+                  "addStandardColumns": [ "LogEvent" ],
+                  "removeStandardColumns": [ "Properties" ]
+                }
+              }
+            }
+        ]
+    }
+}
