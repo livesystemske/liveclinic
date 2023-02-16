@@ -72,7 +72,7 @@ namespace LiveClinic
                     Log.Information($"Initializing Service [{s.Name}]");
 
                     app.MapRemoteBffApiEndpoint(s.LocalPath, s.ApiAddress)
-                        .RequireAccessToken(TokenType.UserOrClient);
+                        .RequireAccessToken(TokenType.User);
                     //.SkipResponseHandling();
                 });
                 

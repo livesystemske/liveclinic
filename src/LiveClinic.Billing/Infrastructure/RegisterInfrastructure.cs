@@ -27,7 +27,7 @@ namespace LiveClinic.Billing.Infrastructure
                 .AddJwtBearer("Bearer",options =>
                 {
                     options.Authority = authSettings.Authority;
-                    options.Audience = "liveclinicbilling_api";
+                    options.Audience = "billing";
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateAudience = false

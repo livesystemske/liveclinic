@@ -1,4 +1,5 @@
 using System;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using LiveClinic.Registry.Application.Commands;
 using LiveClinic.Registry.Application.Dtos;
@@ -24,6 +25,7 @@ namespace LiveClinic.Registry.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize("View Patients")]
         public async Task<IActionResult> GetPatient(long id)
         {
             try
@@ -41,10 +43,12 @@ namespace LiveClinic.Registry.Controllers
         }
         
         [HttpGet]
+        [Authorize("View Patients")]
         public async Task<IActionResult> GetPatients()
         {
             try
             {
+                
                 var res = await _mediator.Send(new GetPatientsQuery());
                 if (res.IsSuccess)
                     return Ok(res.Value);
@@ -56,8 +60,10 @@ namespace LiveClinic.Registry.Controllers
                 return StatusCode(500, e.Message);
             }
         }
-        
+
+     
         [HttpPost]
+        [Authorize("Manage Patients")]
         public async Task<IActionResult> RegisterPatient(NewPatientDto patient)
         {
             try
@@ -75,6 +81,7 @@ namespace LiveClinic.Registry.Controllers
         }
         
         [HttpPut("{id}")]
+        [Authorize("Manage Patients")]
         public async Task<IActionResult> UpdatePatient(long id, EditPatientDto patient)
         {
             try
@@ -92,6 +99,7 @@ namespace LiveClinic.Registry.Controllers
         }
 
         [HttpPost("Encounter")]
+        [Authorize("Manage Patients")]
         public async Task<IActionResult> NewPatientEncounter(NewEncounterDto encounter)
         {
             try

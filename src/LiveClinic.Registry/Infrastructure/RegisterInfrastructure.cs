@@ -1,4 +1,5 @@
-﻿using LiveClinic.Registry.Infrastructure.Data;
+﻿using System.Linq;
+using LiveClinic.Registry.Infrastructure.Data;
 using LiveClinic.Shared;
 using LiveClinic.Shared.Common.Settings;
 using MassTransit;
@@ -17,24 +18,40 @@ namespace LiveClinic.Registry.Infrastructure
             services.SetupTransport(configuration);
             return services;
         }
-        
-        private static IServiceCollection SetupIdentity(this IServiceCollection services,IConfiguration configuration)
+
+        private static IServiceCollection SetupIdentity(this IServiceCollection services, IConfiguration configuration)
         {
-            var authSettings=configuration.GetSection(LiveAuthSetting.Key).Get<LiveAuthSetting>();
+            var authSettings = configuration.GetSection(LiveAuthSetting.Key).Get<LiveAuthSetting>();
             services.AddSingleton(authSettings);
+
             services.AddAuthentication("Bearer")
-                .AddJwtBearer("Bearer",options =>
+                .AddJwtBearer("Bearer", options =>
                 {
                     options.Authority = authSettings.Authority;
-                    options.Audience = "liveclinicregistry_api";
+                    options.Audience = "registry";
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateAudience = false
                     };
                 });
+
+            var policySetting = configuration.GetSection(PolicySetting.Key).Get<PolicySetting>();
+            services.AddSingleton(policySetting);
+            
+            services.AddAuthorization(options =>
+            {
+                foreach (var definition in policySetting.Definitions)
+                {
+                    options.AddPolicy(definition.Name,
+                        policy => policy.RequireClaim(
+                            "permission", definition.Permissions
+                        ));
+                }
+            });
+
             return services;
         }
-        
+
         private static IServiceCollection SetupTransport(this IServiceCollection services,IConfiguration configuration)
         {
             var transportSetting=configuration.GetSection(TransportSetting.Key).Get<TransportSetting>();

@@ -34,6 +34,7 @@ function useAuthUser() {
         'user',
         async () => authService.getClaims(), {
             onSuccess: (data) => {
+                console.log('NANI...',data);
                 setAuthUser(buildUser(data));
             }
         });
