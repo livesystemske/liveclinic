@@ -11,6 +11,7 @@ namespace LiveClinic.Shared.Common.Settings
         public string Secret { get; set; }
         public string Scope { get; set; }
         public string Flow { get; set; }
+        public string Mode  { get; set; }
         public Dictionary<string, string> Scopes => GetScopes();
         public string[] ReadScopes => Scopes.Select(x => x.Key).ToArray();
 

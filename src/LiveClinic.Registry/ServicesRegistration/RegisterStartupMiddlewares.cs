@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using LiveClinic.Registry.Infrastructure.Data;
+using LiveClinic.Shared.Common.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,7 +18,7 @@ namespace LiveClinic.Registry.ServicesRegistration
             if (app.Environment.IsDevelopment())
             {
                 var apiVersionDescriptionProvider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
-                
+
                 app.UseSwagger();
                 app.UseSwaggerUI(options =>
                 {
@@ -31,10 +32,15 @@ namespace LiveClinic.Registry.ServicesRegistration
 
             //app.UseCors(RegisterStartupServices._policyName);
             app.UseHttpsRedirection();
-            //app.UseAuthentication();
-            //app.UseAuthorization();
+            app.UseAuthentication();
+            app.UseAuthorization();
 
-            app.MapControllers();
+            if ((app.Services.GetService<LiveAuthSetting>().Mode == "Anon") &
+                app.Environment.IsDevelopment())
+                app.MapControllers().AllowAnonymous();
+            else
+                app.MapControllers();
+
             app.UseSerilogRequestLogging();
             SeedData(app);
 

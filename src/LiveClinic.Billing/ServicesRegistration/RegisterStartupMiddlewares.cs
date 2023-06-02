@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using LiveClinic.Billing.Infrastructure.Data;
+using LiveClinic.Shared.Common.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.DependencyInjection;
@@ -34,7 +35,12 @@ namespace LiveClinic.Billing.ServicesRegistration
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.MapControllers();
+            if ((app.Services.GetService<LiveAuthSetting>().Mode == "Anon") &
+                app.Environment.IsDevelopment())
+                app.MapControllers().AllowAnonymous();
+            else
+                app.MapControllers();
+            
             app.UseSerilogRequestLogging();
             SeedData(app);
             return app;
