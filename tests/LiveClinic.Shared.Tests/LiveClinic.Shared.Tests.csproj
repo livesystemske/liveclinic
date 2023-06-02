@@ -25,16 +25,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <None Update="appsettings.Test.json">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
-      <None Update="RegistryTest.sqlite">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
-    </ItemGroup>
-
-    <ItemGroup>
-      <ProjectReference Include="..\..\src\LiveClinic.Registry\LiveClinic.Registry.csproj" />
+      <ProjectReference Include="..\..\src\shared\LiveClinic.Shared\LiveClinic.Shared.csproj" />
     </ItemGroup>
 
 </Project>

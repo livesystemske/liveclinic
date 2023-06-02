@@ -42,8 +42,10 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\src\LiveClinic.Billing\LiveClinic.Billing.csproj" />
+      <ProjectReference Include="..\..\src\billing\LiveClinic.Billing\LiveClinic.Billing.csproj" />
     </ItemGroup>
+
+
     
 
 </Project>

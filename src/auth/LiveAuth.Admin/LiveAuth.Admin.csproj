@@ -48,6 +48,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\LiveAuth.Admin.EntityFramework.SqlLite\LiveAuth.Admin.EntityFramework.SqlLite.csproj" />
 		<ProjectReference Include="..\LiveAuth.Admin.EntityFramework.SqlServer\LiveAuth.Admin.EntityFramework.SqlServer.csproj" />
 		<ProjectReference Include="..\LiveAuth.Shared\LiveAuth.Shared.csproj" />
 	</ItemGroup>

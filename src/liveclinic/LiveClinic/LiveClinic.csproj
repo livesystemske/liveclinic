@@ -46,8 +46,10 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\..\shared\src\LiveClinic.Shared\LiveClinic.Shared.csproj" />
+      <ProjectReference Include="..\..\shared\LiveClinic.Shared\LiveClinic.Shared.csproj" />
     </ItemGroup>
+
+   
 
     <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
         <!-- Ensure Node.js is installed -->

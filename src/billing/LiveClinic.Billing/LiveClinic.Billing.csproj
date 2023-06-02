@@ -28,12 +28,11 @@
       <Content Include="..\..\.dockerignore">
         <Link>.dockerignore</Link>
       </Content>
-      <None Remove="Registry.sqlite" />
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\..\contracts\src\LiveClinic.Contracts\LiveClinic.Contracts.csproj" />
-      <ProjectReference Include="..\..\..\shared\src\LiveClinic.Shared\LiveClinic.Shared.csproj" />
+      <ProjectReference Include="..\..\contracts\LiveClinic.Contracts\LiveClinic.Contracts.csproj" />
+      <ProjectReference Include="..\..\shared\LiveClinic.Shared\LiveClinic.Shared.csproj" />
     </ItemGroup>
 
 </Project>

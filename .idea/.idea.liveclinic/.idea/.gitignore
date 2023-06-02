@@ -2,9 +2,9 @@
 /shelf/
 /workspace.xml
 # Rider ignored files
-/.idea.liveclinic.iml
-/projectSettingsUpdater.xml
 /modules.xml
+/projectSettingsUpdater.xml
+/.idea.LiveClinic.iml
 /contentModel.xml
 # Editor-based HTTP Client requests
 /httpRequests/
