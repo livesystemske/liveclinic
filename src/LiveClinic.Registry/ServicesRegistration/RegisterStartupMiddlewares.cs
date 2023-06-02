@@ -31,8 +31,8 @@ namespace LiveClinic.Registry.ServicesRegistration
 
             //app.UseCors(RegisterStartupServices._policyName);
             app.UseHttpsRedirection();
-            app.UseAuthentication();
-            app.UseAuthorization();
+            //app.UseAuthentication();
+            //app.UseAuthorization();
 
             app.MapControllers();
             app.UseSerilogRequestLogging();

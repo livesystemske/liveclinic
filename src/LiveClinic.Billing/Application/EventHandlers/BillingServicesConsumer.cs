@@ -20,7 +20,7 @@ namespace LiveClinic.Billing.Application.EventHandlers
 
         public async Task Consume(ConsumeContext<EncounterCreation> context)
         {
-            Log.Information($"Recieved | {context.Message.PatientId} {context.Message.PatientName}");
+            Log.Information($"Received | {context.Message.PatientId} {context.Message.PatientName}");
 
             var billId = 0;
 

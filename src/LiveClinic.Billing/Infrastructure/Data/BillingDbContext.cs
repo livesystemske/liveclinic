@@ -38,10 +38,10 @@ namespace LiveClinic.Billing.Infrastructure.Data
             {
                 ServicePrices.AddRange(new List<ServicePrice>
                 {
-                    new(Service.Registration,Money.From(5,Currency.USD),DateTime.Now.AddYears(1)),
-                    new(Service.Consultation,Money.From(20,Currency.USD),DateTime.Now.AddYears(1)),
-                    new(Service.Pharmacy,Money.From(15,Currency.USD),DateTime.Now.AddYears(1)),
-                    new(Service.Lab,Money.From(10,Currency.USD),DateTime.Now.AddYears(1))
+                    new(Service.Registration,Money.From(5,Currency.USD),DateTime.Now.AddYears(-1)),
+                    new(Service.Consultation,Money.From(20,Currency.USD),DateTime.Now.AddYears(-1)),
+                    new(Service.Pharmacy,Money.From(15,Currency.USD),DateTime.Now.AddYears(-1)),
+                    new(Service.Lab,Money.From(10,Currency.USD),DateTime.Now.AddYears(-1))
                 });
             }
 
