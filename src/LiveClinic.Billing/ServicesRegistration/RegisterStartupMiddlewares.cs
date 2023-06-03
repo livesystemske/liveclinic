@@ -18,6 +18,7 @@ namespace LiveClinic.Billing.ServicesRegistration
             if (app.Environment.IsDevelopment())
             {
                 var apiVersionDescriptionProvider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
+                var auth = app.Services.GetRequiredService<LiveAuthSetting>();
                 
                 app.UseSwagger();
                 app.UseSwaggerUI(options =>
@@ -26,6 +27,9 @@ namespace LiveClinic.Billing.ServicesRegistration
                     {
                         options.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json",
                             description.GroupName.ToUpperInvariant());
+                        options.OAuthClientId(auth.ClientId);
+                        options.OAuthClientSecret(auth.Secret);
+                        options.OAuthAppName(auth.AppName);
                     }
                 });
             }

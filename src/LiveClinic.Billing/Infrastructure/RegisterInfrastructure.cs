@@ -23,16 +23,32 @@ namespace LiveClinic.Billing.Infrastructure
         {
             var authSettings=configuration.GetSection(LiveAuthSetting.Key).Get<LiveAuthSetting>();
             services.AddSingleton(authSettings);
+            
             services.AddAuthentication("Bearer")
                 .AddJwtBearer("Bearer",options =>
                 {
                     options.Authority = authSettings.Authority;
-                    options.Audience = "billing";
+                    options.Audience = "billing.service";
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateAudience = false
                     };
                 });
+            
+            var policySetting = configuration.GetSection(PolicySetting.Key).Get<PolicySetting>();
+            services.AddSingleton(policySetting);
+            
+            services.AddAuthorization(options =>
+            {
+                foreach (var definition in policySetting.Definitions)
+                {
+                    options.AddPolicy(definition.Name,
+                        policy => policy.RequireClaim(
+                            "permission", definition.Permissions
+                        ));
+                }
+            });
+            
             return services;
         }
         

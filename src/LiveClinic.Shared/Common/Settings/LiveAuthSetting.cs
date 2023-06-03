@@ -7,6 +7,7 @@ namespace LiveClinic.Shared.Common.Settings
     {
         public const string Key = "LiveAuth";
         public string Authority { get; set; }
+        public string AppName { get; set; }
         public string ClientId { get; set; }
         public string Secret { get; set; }
         public string Scope { get; set; }
